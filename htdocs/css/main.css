@@ -1,0 +1,36 @@
+body {
+    background: #E8E8E8;
+    margin: 7px 0 0 0;
+    padding: 0;
+}
+
+#nav, #buttonblock, #content, #footer {
+    width: 50%;
+    margin: 0 auto 0 auto;
+    text-transform: uppercase;
+}
+
+#header {
+    background: url('../images/headerbg.jpg') repeat-x center top;
+    text-align: center;
+    height: 191px;
+    padding-top: 10px;
+}
+
+#buttonblock {
+    border-top: solid 1px black;
+    border-bottom: solid 1px black;
+    text-align: center;
+}
+
+#content {
+    padding: 35px 0 35px 0;
+}
+
+#footer {
+    border-top: solid 1px black;
+    padding-top: 10px;
+    text-transform: uppercase;
+
+}
+
