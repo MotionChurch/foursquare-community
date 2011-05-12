@@ -48,11 +48,34 @@ CREATE TABLE post (
     secretid    VARCHAR(32)  NOT NULL,
 
     source_id   INTEGER     UNSIGNED NOT NULL,
+    stage      ENUM('verification',
+                    'moderation',
+                    'approved') NOT NULL DEFAULT 'verification',
 
     PRIMARY KEY(id),
     UNIQUE  KEY(secretid)
 );
 
+CREATE TABLE user (
+    id          INTEGER     UNSIGNED NOT NULL AUTO_INCREMENT,
+    name        VARCHAR(60) NOT NULL,
+    email       VARCHAR(255) NOT NULL,
+    password    VARCHAR(40) NOT NULL,
+    source_id   INTEGER     NOT NULL,
+    admin       TINYINT(1)  NOT NULL DEFAULT 0,
+
+    PRIMARY KEY(id),
+    UNIQUE  KEY(email)
+);
+
+CREATE TABLE pages (
+    id          INTEGER     UNSIGNED NOT NULL AUTO_INCREMENT,
+    url         VARCHAR(60) NOT NULL,
+    content     TEXT NOT NULL,
+
+    PRIMARY KEY(id),
+    UNIQUE  KEY(url)
+);
 
 -- The following creates some sample data
 INSERT INTO category (name) VALUES 
@@ -63,3 +86,7 @@ INSERT INTO category (name) VALUES
     ('Needs');
 
 INSERT INTO source (name) VALUES ('Foursquare Church');
+
+INSERT INTO user (name, email, password, source_id, admin)
+    VALUES ('Jesse Morgan', 'jmorgan@foursquarestaff.com',
+        'password-sha1', 1, 1);

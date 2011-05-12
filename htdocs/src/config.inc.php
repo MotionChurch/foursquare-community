@@ -12,14 +12,18 @@ $CONFIG = array(
     // Database Information
     'dbhost' => '127.0.0.1',
     'dbuser' => 'p4scommunity',
-    'dbpass' => '',
+    'dbpass' => 'password',
     'dbname' => 'p4scommunity',
 
     // Site Information
     'sitetitle' => 'Foursquare Community',
     'urlroot'   => 'http://localhost/~jesse/p4s/community/htdocs',
+    
+    'root'      => '/Users/jesse/Development/P4Square/community/htdocs',
 
-
+    'debug'     => true,
 );
+
+set_include_path(get_include_path() . PATH_SEPARATOR . $CONFIG['root'].'/src');
 
 ?>

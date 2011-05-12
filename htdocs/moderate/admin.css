@@ -1,0 +1,99 @@
+body {
+    font-family: "Lucida Grande", "Lucida Sans", "Lucida", sans-serif;
+	font-size: 0.75em;
+    line-height: 1.5em;
+
+    margin-left: 10%;
+    margin-top: 5%;
+    width: 60%;
+}
+
+h1 {
+    font-size: 4em;
+    margin-bottom: 1.25em;
+}
+
+a, a:visited {
+    color: #1070c0;
+    text-decoration: none;
+}
+
+#content {
+    width: 75%;
+    padding-left: 3em;
+
+}
+
+#nav {
+    float: right;
+}
+
+#nav ul {
+    padding-left: 1em;
+    list-style: none;
+}
+
+#search {
+    float: right;
+    margin-top: -2em;
+}
+
+#listing {
+    margin-top: 1.5em;
+}
+
+#listing .header {
+    background: #555;
+    padding: 0.75em;
+    color: white;
+    font-weight: bold;
+    font-size: 120%;
+}
+
+#listing .row0, #listing .row1 {
+    border-top: solid thin #AAA;
+    padding: 0.75em;
+}
+
+#listing .row0 {
+}
+
+#listing .row1 {
+}
+
+#listing .col0 {
+    display: inline-block;
+    width: 100px;
+    text-align: center;
+}
+
+
+.element input[type=text], .element input[type=password] {
+    width: 90%;
+    padding: .5em;
+}
+
+label {
+    font-weight: bold;
+}
+
+.element {
+    margin-bottom: 1.25em;
+}
+
+.buttons {
+    float: right;
+    margin-right: 10%;
+}
+
+div.error {
+    background: #FAA;
+    border: solid red 2px;
+    padding: 1.5em;
+    margin: 2em 0 2em 0;
+    width: 90%;
+}
+
+p {
+    margin: 0;
+}
