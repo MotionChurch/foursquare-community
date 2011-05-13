@@ -31,7 +31,7 @@ class Post {
     }
 
     private static function getPost($where) {
-        $query = "SELECT * FROM post WHERE $where";
+        $query = "SELECT *, UNIX_TIMESTAMP(created) AS createdts FROM post WHERE $where";
 
         $db = getDatabase();
         
@@ -59,7 +59,11 @@ class Post {
     }
 
     public function getName() {
-        return $this->info['name'];
+        return htmlspecialchars($this->info['name']);
+    }
+
+    public function getDescription() {
+        return htmlspecialchars($this->info['description']);
     }
 
     public function getStage() {
@@ -76,6 +80,30 @@ class Post {
 
     public function getCreated() {
         return $this->info['created'];
+    }
+
+    public function getAge() {
+        $diff = time() - $this->info['createdts'];
+
+        if ($diff < 60) {
+            return floor($diff) ." seconds ago";
+
+        } else if ($diff < 3600) {
+            return floor($diff / 60) ." minutes ago";
+
+        } else if ($diff < 86400) {
+            return floor($diff / 3600) ." hours ago";
+
+        } else if ($diff < 604800) {
+            return floor($diff / 86400) ." days ago";
+
+        } else {
+            return floor($diff / 604800) . " weeks ago";
+        }
+    }
+
+    public function getLocation() {
+        return $this->info['location'];
     }
 }
 

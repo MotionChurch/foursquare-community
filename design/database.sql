@@ -43,6 +43,7 @@ CREATE TABLE post (
     category_id INTEGER     UNSIGNED NOT NULL,
     created     DATETIME    NOT NULL,
     description TEXT        NOT NULL,
+    location    VARCHAR(100) NOT NULL,
     
     email       VARCHAR(255) NOT NULL,
     secretid    VARCHAR(32)  NOT NULL,
