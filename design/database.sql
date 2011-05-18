@@ -24,6 +24,7 @@ USE p4scommunity;
 
 CREATE TABLE category (
     id          INTEGER     UNSIGNED NOT NULL AUTO_INCREMENT,
+    shortname   VARCHAR(30) NOT NULL,
     name        VARCHAR(30) NOT NULL,
 
     PRIMARY KEY(id)
@@ -79,12 +80,12 @@ CREATE TABLE pages (
 );
 
 -- The following creates some sample data
-INSERT INTO category (name) VALUES 
-    ('Jobs'), 
-    ('Housing'),
-    ('Events'),
-    ('For Sale'),
-    ('Needs');
+INSERT INTO category (name, shortname) VALUES 
+    ('Jobs',    'jobs'), 
+    ('Housing', 'housing'),
+    ('Events',  'events'),
+    ('For Sale','forsale'),
+    ('Needs',   'needs');
 
 INSERT INTO source (name) VALUES ('Foursquare Church');
 

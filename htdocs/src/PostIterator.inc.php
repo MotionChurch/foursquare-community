@@ -33,6 +33,10 @@ class PostIterator implements Iterator {
         $this->where[] = "source_id='$source'";
     }
 
+    public function filterCategory($category_id) {
+        $this->where[] = "category_id='$category_id'";
+    }
+
     public function orderBy($order) {
         $this->order = $order;
     }
