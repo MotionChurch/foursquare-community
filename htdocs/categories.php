@@ -53,7 +53,8 @@ function displayEvents($category) {
 
     if ($posts->valid()) {
         foreach ($posts as $id => $post) {
-            printf("<div class=\"post\"><p><a href=\"postings/%s.html\">%s</a></p>"
+            printf("<div class=\"post\"><p><a href=\"". $GLOBALS['CONFIG']['urlroot']
+                    . "/postings/%s.html\">%s</a></p>"
                     . "<div class=\"desc\"><span class=\"location\">%s</span>"
                     . " <span class=\"age\">%s</span></div></div>",
                     

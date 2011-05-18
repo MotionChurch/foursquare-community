@@ -12,9 +12,15 @@ body {
     text-transform: uppercase;
 }
 
+#nav ul {
+    padding-left: 0;
+    text-align: center;
+}
+
 #nav ul li {
     display: inline;
     list-style: none;
+    margin: 0 1.5em 0 1.5em;
 }
 
 .bigbutton {
@@ -42,18 +48,36 @@ body {
     padding-top: 10px;
 }
 
+#about {
+    border-top: solid 1px white;
+    border-bottom: solid 1px white;
+    width: 40%;
+    margin: 0 auto 0 auto;
+    padding: 1em 2em 1em 2em;
+    background: rgba(0, 0, 0, 0.40);
+    color: white;
+    text-transform: uppercase;
+    font-size: 75%;
+}
+
 #buttonblock {
     border-top: solid 1px black;
     border-bottom: solid 1px black;
     text-align: center;
+    padding-bottom: 1em;
+}
+
+#buttonblock p {
+    letter-spacing: 1px;
 }
 
 #buttonblock div {
     display: inline-block;
+    margin: 0 1em 0 1em;
 }
 
 #content {
-    padding: 35px 0 35px 0;
+    padding: 10px 0 35px 0;
 }
 
 #footer {
@@ -63,3 +87,26 @@ body {
 
 }
 
+.post {
+    margin-bottom: 2em;
+}
+
+.post p {
+    font-size: 120%;
+    margin-bottom: 0;
+}
+
+.post .desc {
+    font-size: 80%;
+}
+
+.post .location {
+
+}
+
+.post .age {
+    display: inline-block;
+    color: #AAA;
+    position: relative;
+    left: 200px;
+}
