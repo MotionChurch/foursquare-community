@@ -20,7 +20,8 @@
 
 <div id="nav">
     <ul>
-        <li><a href="" class="bigbutton">Create Post</a></li>
+        <li><a href="<?= $CONFIG['urlroot'] ?>/new-post" class="bigbutton">
+            Create Post</a></li>
         <li><a href="" class="bigbutton">Safety Tips</a></li>
         <li><a href="" class="bigbutton">Contact Us</a></li>
     </ul>
