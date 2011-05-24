@@ -111,7 +111,7 @@ class Cif_Database {
     }
 
     /**
-     * Insert a collection of rows into the database.
+     * Insert a row into the database.
      *
      * @param string $table The table to update.
      * @param array $row Arrays of fields mapped to values for the new row.

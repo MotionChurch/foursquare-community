@@ -16,12 +16,14 @@ $CONFIG = array(
     'dbname' => 'p4scommunity',
 
     // Site Information
-    'sitetitle' => 'Foursquare Community',
+    'sitetitle'  => 'Foursquare Community',
+    'email_from' => 'community@myfoursquarechurch.com',
+
     'urlroot'   => 'http://localhost/~jesse/p4s/community/htdocs',
-    
     'root'      => '/Users/jesse/Development/P4Square/community/htdocs',
 
-    'debug'     => true,
+    'debug'      => true,
+    'production' => false,
 );
 
 set_include_path(get_include_path() . PATH_SEPARATOR . $CONFIG['root'].'/src');

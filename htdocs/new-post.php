@@ -31,7 +31,7 @@ if (isset($_POST['category'])) {
             $error .= "<p>$desc is a required field.</p>";
         
         } else {
-            $values[$field] = addslashes($_POST[$field]);
+            $values[$field] = trim($_POST[$field]);
         }
     }
 
@@ -44,8 +44,10 @@ if (isset($_POST['category'])) {
 
         $post->setEmail($values['email']);
         $post->setCategory($values['category']);
-        $post->setTitle($values['title']);
+        $post->setName($values['title']);
         $post->setDescription($values['description']);
+
+        // TODO: Set the source of the post.
 
         if ($post->save()) {
             $post->sendValidation();
