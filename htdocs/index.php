@@ -21,7 +21,6 @@ $posts->limit(5);
 $posts->query();
 
 if ($posts->valid()) {
-    for ($i = 0; $i < 10; $i++) { 
     foreach ($posts as $id => $post) {
         printf("<div class=\"post\"><p><a href=\"". $GLOBALS['CONFIG']['urlroot']
                 . "/postings/%s.html\">%s</a></p>"
@@ -29,7 +28,6 @@ if ($posts->valid()) {
                 . " <span class=\"age\">%s</span></div></div>",
                 
                 $id, $post->getName(), $post->getLocation(), $post->getAge());
-    }
     }
 
 } else {

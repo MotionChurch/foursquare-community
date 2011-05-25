@@ -1,64 +1,51 @@
 <?php
-/* $Id: header.inc.php 151 2011-04-19 23:21:06Z jessemorgan $ */
 
-if (!isset($SESSION['currentUser']['id'])) {
-    if (isset($_POST['login_email']) and isset($_POST['login_password'])) {
-        $db = getDatabase();
-
-        $email = addslashes($_POST['login_email']);
-        $password = sha1($_POST['password']);
-
-        $query = "SELECT * FROM jpm_users WHERE `email`='$email' AND `password`='$password'";
-        $result = $db->fetchAssocRow($query);
-
-        if ($result) { 
-            $SESSION['currentUser'] = $result;
-        }
-    
-    }
+// Require Authentication
+if (!isset($_SESSION['currentUser'])) {
+    header('Location: ' . $CONFIG['urlroot'].'/moderate/login.php');
+    exit();
 }
 
 ?><!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="<?= $CONFIG['siteroot']?>/admin/admin.css" />
+    <title><?= $CONFIG['sitetitle'] ?> Moderation</title>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('a.delete').click(function() {
-                return confirm('Are you sure you want to delete this?');
-
-            });
-
-            $('a.delete img').hover(function() {
-                    $(this).attr('src', '<?= $CONFIG['siteroot'] ?>/admin/images/delete.png');
-                },
-                function() {
-                    $(this).attr('src', '<?= $CONFIG['siteroot'] ?>/admin/images/deletegray.png');
-                });
-
-        });
-    </script>
+    <link rel="stylesheet" href="<?= $CONFIG['urlroot'] ?>/css/main.css" />
+    <link rel="stylesheet" href="<?= $CONFIG['urlroot'] ?>/moderate/admin.css" />
 
 </head>
 <body>
+<div id="header">
+    <p><a href="<?= $CONFIG['urlroot'] ?>">
+        <img src="<?= $CONFIG['urlroot'] ?>/images/logo.png" 
+        alt="<?= $CONFIG['sitetitle'] ?>" /></a></p>
 
-<h1><a href="<?= $CONFIG['siteroot']?>/admin/index.php">Foursquare Admin Panel</a></h1>
-<div id="nav">
-    <h2>Navigation</h2>
+    <div id="about">
+        Foursquare community is a place where you can find help,
+        sell merchandise, list events or even post your rental.
+        We want to build a help you get connected to the community of our church!
+    </div>
+</div>
+
+<h1><?= $CONFIG['sitetitle'] ?> Moderation</h1>
+
+<div id="content">
+
+<div id="modnav">
     <ul>
-        <li><a href="<?= $CONFIG['siteroot']?>/admin/online-campus">Online Services</a>
-            <ul>
-            <li><a href="<?= $CONFIG['siteroot']?>/admin/online-campus/attendance">Online Attendance</a></li>
-            </ul>
-        </li>
+        <li><a href="">Moderate Posts</a></li>
+        
+        <?php
+            // Admin Navigation
+            if ($_SESSION['currentUser']->isAdmin()) {
+                echo "<li><a href=\"". $CONFIG['urlroot'] ."/\">Pages</a></li>";
+                echo "<li><a href=\"". $CONFIG['urlroot'] ."/\">Users</a></li>";
+            }
+        ?>
 
-        <li><a href="<?= $CONFIG['siteroot']?>/troubleshoot.php">Troubleshooting Page</a></li>
-        <li><a href="<?= $CONFIG['siteroot']?>/admin/accounts/">Accounts</a></li>
-        <li><a href="<?= $CONFIG['siteroot']?>/admin/changepassword.php">Change Password</a></li>
-        <li><a href="<?= $CONFIG['siteroot']?>/admin/login.php?logout">Logout</a></li>
+        <li><a href="">Account Settings</a></li>
+        <li><a href="">Logout</a></li>
     </ul>
 </div>
 
-<div id="content">

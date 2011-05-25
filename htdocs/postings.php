@@ -28,8 +28,22 @@ if (!is_numeric($id)) {
 // Get the post.
 $post = Post::getById($id);
 
-if (!$post or $post->getStage() != 'approved') {
+if (!$post or (!isset($_GET['moderate']) and $post->getStage() != 'approved')) {
     errorNotFound();
+}
+
+if (isset($_GET['moderate'])) {
+    if (!isset($_SESSION['currentUser'])) {
+        header('Location: ' . $CONFIG['urlroot'].'/moderate/login.php');
+        exit();
+    }
+    echo "<div class=\"moderationbox\">You are moderating this post: ";
+    printf("<a href=\"../moderate/moderate.php?id=%s&action=approve\">Approve</a> "
+        . "<a href=\"../moderate/moderate.php?id=%s&action=reject\">Reject</a>",
+        $post->getId(), $post->getId());
+    echo "<p><a href=\"../moderate/index.php\">Return to moderation</a></p>";
+    echo "</div>";
+
 }
 
 // Display the post.

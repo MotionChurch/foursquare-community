@@ -117,3 +117,15 @@ body {
     padding: 0.5em;
     margin: 1em auto 1em auto;
 }
+
+.errorbox {
+    width: 80%;
+    border: #DD0000 solid 3px;
+    background: #FFBBBB;
+    padding: 0.5em;
+    margin: 1em 0 1em 0;
+}
+
+.errorbox p {
+    margin: 0;
+}

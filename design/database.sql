@@ -52,7 +52,8 @@ CREATE TABLE post (
     source_id   INTEGER     UNSIGNED NOT NULL,
     stage      ENUM('verification',
                     'moderation',
-                    'approved') NOT NULL DEFAULT 'verification',
+                    'approved',
+                    'rejected') NOT NULL DEFAULT 'verification',
 
     PRIMARY KEY(id),
     UNIQUE  KEY(secretid)

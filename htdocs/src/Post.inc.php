@@ -128,6 +128,10 @@ class Post {
         }
     }
 
+    public function reject() {
+        $this->info['stage'] = 'rejected';
+    }
+
     public function getCreated() {
         return $this->info['created'];
     }

@@ -69,6 +69,10 @@ class User {
     public function authenticate($password) {
         return sha1($password) == $this->info['password'];
     }
+
+    public function isAdmin() {
+        return $this->info['admin'] == 1;
+    }
 }
 
 ?>

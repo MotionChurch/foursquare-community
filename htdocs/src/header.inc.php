@@ -8,8 +8,9 @@
 </head>
 <body>
 <div id="header">
-    <p><img src="<?= $CONFIG['urlroot'] ?>/images/logo.png" 
-        alt="<?= $CONFIG['sitetitle'] ?>" /></p>
+    <p><a href="<?= $CONFIG['urlroot'] ?>">
+        <img src="<?= $CONFIG['urlroot'] ?>/images/logo.png" 
+        alt="<?= $CONFIG['sitetitle'] ?>" /></a></p>
 
     <div id="about">
         Foursquare community is a place where you can find help,

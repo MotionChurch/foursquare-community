@@ -43,11 +43,16 @@ if (isset($_POST['category'])) {
         $error .= "<p>You must accept the terms of service.</p>";
     }
 
+    $category = Category::getByShortname(addslashes($values['category']));
+    if (!$category) {
+        $error .= "<p>Invalid category.</p>";
+    }
+
     if ($error == '') {
         $post = new Post();
 
         $post->setEmail($values['email']);
-        $post->setCategory($values['category']);
+        $post->setCategory($category->getId());
         $post->setName($values['title']);
         $post->setDescription($values['description']);
 
@@ -75,26 +80,33 @@ require_once "src/footer.inc.php";
 
 
 function render_form($error="") {
+    global $values;
+
     if ($error != '') {
-        echo "<div class=\"error\">$error</div>";
+        echo "<div class=\"errorbox\">$error</div>";
     }
 
     echo "<form action=\"new-post.php\" method=\"post\">";
     echo "<p><label>Category: <select name=\"category\">";
     foreach (Category::getCategories() as $short => $name) {
-        echo "<option name=\"$short\">$name</option>";
+        if (isset($_POST['category']) and $_POST['category'] == $short) {
+            echo "<option name=\"$short\" selected=\"selected\">$name</option>";
+
+        } else {
+            echo "<option name=\"$short\">$name</option>";
+        }
     }
     echo "</select></label</p>";
 
-    echo "<p><label>Title: <input type=\"text\" name=\"title\" /></label></p>";
+    echo "<p><label>Title: <input type=\"text\" name=\"title\" value=\"${values[title]}\" /></label></p>";
 
     echo "<p><label for=\"desc\">Description:</label></p>";
     echo "<p><textarea name=\"description\" id=\"desc\" rows=\"10\""
-            . " cols=\"80\"></textarea></p>";
+            . " cols=\"80\">${values[description]}</textarea></p>";
 
-    echo "<p><label>Email Address: <input type=\"text\" name=\"email\" />"
+    echo "<p><label>Email Address: <input type=\"text\" name=\"email\" value=\"${values[email]}\" />"
             . "</label></p>";
-    echo "<p><label>Confirm Email: <input type=\"text\" name=\"email2\" />"
+    echo "<p><label>Confirm Email: <input type=\"text\" name=\"email2\" value=\"${values[email2]}\" />"
             . "</label></p>";
 
     // TODO: Link to terms of service.
