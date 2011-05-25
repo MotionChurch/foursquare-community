@@ -9,7 +9,6 @@ body {
 #nav, #buttonblock, #content, #footer {
     width: 50%;
     margin: 0 auto 0 auto;
-    text-transform: uppercase;
 }
 
 #nav ul {
@@ -109,4 +108,12 @@ body {
     color: #AAA;
     position: relative;
     left: 200px;
+}
+
+.moderationbox {
+    width: 80%;
+    border: #DDDD00 solid 3px;
+    background: #FFFF55;
+    padding: 0.5em;
+    margin: 1em auto 1em auto;
 }

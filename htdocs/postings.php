@@ -28,7 +28,7 @@ if (!is_numeric($id)) {
 // Get the post.
 $post = Post::getById($id);
 
-if (!$post) {
+if (!$post or $post->getStage() != 'approved') {
     errorNotFound();
 }
 

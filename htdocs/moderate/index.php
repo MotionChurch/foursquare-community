@@ -34,11 +34,10 @@ $posts->query();
 
 if ($posts->valid()) {
     foreach ($posts as $id => $post) {
-        printf("<div class=\"post\"><p><a href=\"preview/%s\">%s</a></p>"
-                . "<div class=\"options\"><a href=\"approve/%s\">Approve</a>"
-                . " <a href=\"reject/%s\">Reject</a></div></div>",
-                
-                $id, $post->getName(), $id, $id);
+        printf("<div class=\"post\"><p><a href=\"preview/%s.html\">%s</a></p>"
+                . "%s <a href=\"mailto:%s\">%s</a></div>",
+
+                $id, $post->getName(), $post->getCreated(), $post->getEmail(), $post->getEmail());
     }
 
 } else {

@@ -39,6 +39,10 @@ if (isset($_POST['category'])) {
         $error .= "<p>Email addresses must match.</p>";
     }
 
+    if ($_POST['tos'] != '1') {
+        $error .= "<p>You must accept the terms of service.</p>";
+    }
+
     if ($error == '') {
         $post = new Post();
 
@@ -96,6 +100,8 @@ function render_form($error="") {
     // TODO: Link to terms of service.
     echo "<p><label><input type=\"checkbox\" name=\"tos\" value=\"1\" />"
             ." I agree to the terms of service.</label></p>";
+
+    // TODO: Allow picture uploads.
 
     echo "<p><input type=\"submit\" value=\"Submit\" /></p></form>";
 }

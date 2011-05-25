@@ -46,10 +46,11 @@ class Post {
         $row = $db->fetchAssocRow($query);
 
         if ($row) {
-            $user = new Post();
-            $user->info = $row;
+            $post = new Post();
+            $post->info = $row;
+            $post->indatabase = true;
 
-            return $user;
+            return $post;
 
         } else {
             return false;
@@ -62,6 +63,9 @@ class Post {
         // Cleanup Info
         foreach ($this->info as $key=>$value) $info[$key] = addslashes($value);
 
+        // Remove artifical fields.
+        unset($info['createdts']);
+
         // Save or create?
         if ($this->indatabase) {
             return $db->update('post', $info, "WHERE `id`='". $this->getId() ."'");
@@ -70,6 +74,7 @@ class Post {
             // Creating... set special fields.
             $info['stage'] = 'verification';
             $info['secretid'] = uniqid();
+            $info['created'] = date('Y-m-d H:i:s');
             
             $ret = $db->insert('post', $info);
              
@@ -112,11 +117,15 @@ class Post {
     }
 
     public function approve() {
-        $this->info['stage'] = 'approved';
+        if ($this->getStage() == 'moderation') {
+            $this->info['stage'] = 'approved';
+        }
     }
 
     public function verify() {
-        $this->info['stage'] = 'verify';
+        if ($this->getStage() == 'verification') {
+            $this->info['stage'] = 'moderation';
+        }
     }
 
     public function getCreated() {
