@@ -155,7 +155,12 @@ function finish_post() {
         $post->setName($values['title']);
         $post->setDescription($values['description']);
 
-        return true;
+        if ($post->save()) {
+            return true;
+
+        } else {
+            $error .= 'An internal error has occured.';
+        }
     }
 
     handle_post($error);
@@ -165,17 +170,23 @@ function finish_post() {
 function handle_images() {
     $post = $_SESSION['newpost'];
 
-    // Save Post 
-    if (!$post->save()) {
-        $error .= "An internal error has occured.";
+    // Display image form
+    echo "<p>You may upload up to four images with your post.</p>";
+
+    form_start('finish');
+
+    for ($i = 1; $i <= 4; $i++) {
+        echo "<p><label>Image $i: "
+            . "<input type=\"file\" name=\"images[]\" /></label></p>";
     }
 
-    // Display image form
-
+    form_end();
 }
 
 function finish_images() {
+    $post = $_SESSION['newpost'];
 
+    return true;
 }
 
 function handle_finish() {
@@ -185,14 +196,13 @@ function handle_finish() {
     $post->sendValidation();
 
     // Display confirmation message
-    // TODO: Revise wording of confirmation message.
-    echo "<p>Your posting is awaiting email verification</p>";
+    echo "<p>Your posting is almost complete. You must verify your email address by visiting the link we have emailed you, then your posting will be reviewed by our moderation team.</p>";
 }
 
 
 function form_start($stage) {
     echo "<form action=\"". $GLOBALS['CONFIG']['urlroot'] ."/new-post.php?stage=$stage\""
-            ." method=\"post\">";
+            ." method=\"post\" enctype=\"multipart/form-data\">";
 }
 
 function form_end() {
@@ -211,16 +221,17 @@ function render_form($error="") {
         echo "<div class=\"errorbox\">$error</div>";
     }
 
-    echo "<p><label>Title: <input type=\"text\" name=\"title\" value=\"${values[title]}\" /></label></p>";
+    echo "<p><label>Title: <input type=\"text\" name=\"title\" value=\"${_POST[title]}\" /></label></p>";
 
     echo "<p><label for=\"desc\">Description:</label></p>";
     echo "<p><textarea name=\"description\" id=\"desc\" rows=\"10\""
-            . " cols=\"80\">${values[description]}</textarea></p>";
+            . " cols=\"80\">${_POST[description]}</textarea></p>";
 
-    echo "<p><label>Email Address: <input type=\"text\" name=\"email\" value=\"${values[email]}\" />"
+    echo "<p><label>Email Address: <input type=\"text\" name=\"email\" value=\"${_POST[email]}\" />"
             . "</label>";
-    echo " <label>Confirm Email: <input type=\"text\" name=\"email2\" value=\"${values[email2]}\" />"
-            . "</label></p>";
+    echo " <label>Confirm Email: <input type=\"text\" name=\"email2\" value=\"${_POST[email2]}\" />"
+            . "</label></p>"
+            . "<p>Your email address will only be visible to our moderators.</p>";
 
 
 }

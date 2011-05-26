@@ -20,7 +20,7 @@ $CONFIG = array(
     'email_from' => 'community@myfoursquarechurch.com',
 
     'urlroot'   => 'http://localhost/~jesse/p4s/community/htdocs',
-    'root'      => '/Users/jesse/Development/P4Square/community/htdocs',
+    'root'      => '/home/jesse/Development/p4square/community/htdocs',
 
     'debug'      => true,
     'production' => false,

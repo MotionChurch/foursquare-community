@@ -68,7 +68,13 @@ class Post {
 
         // Save or create?
         if ($this->indatabase) {
-            return $db->update('post', $info, "WHERE `id`='". $this->getId() ."'");
+            try {
+                $db->update('post', $info, "WHERE `id`='". $this->getId() ."'");
+                return true;
+
+            } catch (Cif_Database_Exception $e) {
+                return false;
+            }
 
         } else {
             // Creating... set special fields.
@@ -76,15 +82,20 @@ class Post {
             $info['secretid'] = uniqid();
             $info['created'] = date('Y-m-d H:i:s');
             
-            $ret = $db->insert('post', $info);
-             
-            if ($ret) {
-                $this->info['id'] = $ret;
-                $this->info['stage'] = 'verification';
-                $this->info['secretid'] = $info['secretid'];
-            }
+            try {
+                $ret = $db->insert('post', $info);
 
-            return $ret;
+                if ($ret) {
+                    $this->info['id'] = $ret;
+                    $this->info['stage'] = 'verification';
+                    $this->info['secretid'] = $info['secretid'];
+                }
+
+                return true;
+
+            } catch (Cif_Database_Exception $e) {
+                return false;
+            }
         }
     }
 
@@ -119,6 +130,7 @@ class Post {
     public function approve() {
         if ($this->getStage() == 'moderation') {
             $this->info['stage'] = 'approved';
+            $this->sendAcceptance();
         }
     }
 
@@ -128,8 +140,10 @@ class Post {
         }
     }
 
-    public function reject() {
+    public function reject($message='') {
         $this->info['stage'] = 'rejected';
+
+        $this->sendRejection($message);
     }
 
     public function getCreated() {
@@ -181,6 +195,37 @@ class Post {
         
         $email->appendMessage("Please click on the link below to verify your email address.\n\n");
         $email->appendMessage($url);
+
+        $email->send();
+    }
+
+    public function sendAcceptance() {
+        $email = new Email($this->getEmail());
+
+        $email->setSubject($GLOBAL['CONFIG']['sitetitle'] . " Posting Approved");
+
+        $email->appendMessage("Your posting titled ". $this->getName()
+            ." has been approved by our moderation team.\n\n");
+
+        $url = $GLOBALS['CONFIG']['urlroot'] . '/postings/'
+            . $this->getId() .'.html';
+        $email->appendMessage("You can view your post at $url.");
+
+        $email->send();
+    }
+
+    public function sendRejection($message='') {
+        $email = new Email($this->getEmail());
+
+        $email->setSubject($GLOBAL['CONFIG']['sitetitle'] . " Posting Rejected");
+
+        $email->appendMessage("Your posting titled ". $this->getName()
+            ." has been rejected by our moderation team.\n\n");
+
+        if ($message != '') {
+            $email->appendMessage("The moderator left the following comment\n");
+            $email->appendMessage($message);
+        }
 
         $email->send();
     }
