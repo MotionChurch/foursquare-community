@@ -12,6 +12,8 @@ require_once "src/base.inc.php";
 
 require_once "src/header.inc.php";
 
+const MAX_IMAGE_UPLOADS = 4;
+
 echo "<h2>New Posting</h2>";
 
 /*
@@ -175,7 +177,7 @@ function handle_images() {
 
     form_start('finish');
 
-    for ($i = 1; $i <= 4; $i++) {
+    for ($i = 1; $i <= MAX_IMAGE_UPLOADS; $i++) {
         echo "<p><label>Image $i: "
             . "<input type=\"file\" name=\"images[]\" /></label></p>";
     }
@@ -185,6 +187,12 @@ function handle_images() {
 
 function finish_images() {
     $post = $_SESSION['newpost'];
+
+    if (isset($_FILES['images']) and is_array($_FILES['images'])) {
+        foreach ($_FILES['images'] as $file) {
+            $post->addImage($file['tmp_name']);
+        }
+    }
 
     return true;
 }

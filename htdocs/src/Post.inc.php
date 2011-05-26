@@ -186,6 +186,20 @@ class Post {
         return $this->info['location'];
     }
 
+    public function addImage($file) {
+        // TODO: Verify file type
+
+        // TODO: Unique name for file.
+        $newfile = $GLOBALS['CONFIG']['uploads'];
+
+        if (move_uploaded_file($file, $newfile)) {
+            return true;
+
+        } else {
+            return false;
+        }
+    }
+
     public function sendValidation() {
         $email = new Email($this->getEmail());
 
