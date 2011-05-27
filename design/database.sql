@@ -59,6 +59,13 @@ CREATE TABLE post (
     UNIQUE  KEY(secretid)
 );
 
+CREATE TABLE image (
+    id          INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    post_id     INTEGER UNSIGNED NOT NULL,
+
+    PRIMARY KEY(id)
+);
+
 CREATE TABLE user (
     id          INTEGER     UNSIGNED NOT NULL AUTO_INCREMENT,
     name        VARCHAR(60) NOT NULL,

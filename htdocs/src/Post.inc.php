@@ -13,6 +13,7 @@ require_once "base.inc.php";
 class Post {
     private $info;
     private $indatabase = false;
+    private $images;
 
 
     public function __construct($info=null) {
@@ -24,6 +25,8 @@ class Post {
         } else {
             $this->indatabase = false;
         }
+
+        $images = null;
     }
 
     public static function getById($id) {
@@ -34,6 +37,12 @@ class Post {
 
     public static function getBySecretId($secretid) {
         $where = "secretid='$secretid'";
+
+        return Post::getPost($where);
+    }
+
+    public static function getByImage($imgid) {
+        $where = "id=(SELECT post_id FROM image WHERE id='$imgid')";
 
         return Post::getPost($where);
     }
@@ -150,6 +159,10 @@ class Post {
         return $this->info['created'];
     }
 
+    public function getTimestamp() {
+        return $this->info['createdts'];
+    }
+
     public function getEmail() {
         return $this->info['email'];
     }
@@ -186,24 +199,60 @@ class Post {
         return $this->info['location'];
     }
 
+    public function getImages() { 
+        if ($this->images == null) {
+            $this->loadImages();
+        }
+
+        return $this->images;
+    }
+
     public function addImage($file) {
-        // TODO: Verify file type
+        // Verify file type
+        $info = @getimagesize($file);
 
-        // TODO: Unique name for file.
-        $newfile = $GLOBALS['CONFIG']['uploads'];
-
-        if (move_uploaded_file($file, $newfile)) {
-            return true;
-
-        } else {
+        if (!$info) {
             return false;
+        }
+
+        // TODO Verify image dimensions?
+
+        // Get image id
+        $db = getDatabase();
+        try {
+            $id = $db->insert('image', array('post_id' => $this->getId()));
+            $newfile = $GLOBALS['CONFIG']['uploads'] . "/$id";
+
+            if (move_uploaded_file($file, $newfile)) {
+                // Invalidate the image cache
+                $this->images = null;
+
+                return true;
+            }
+
+        } catch (Cif_Database_Exception $e) {
+
+        }
+
+        return false;
+    }
+
+    private function loadImages() {
+        $query = "SELECT id FROM image WHERE post_id='". $this->getId() ."'";
+
+        $db = getDatabase();
+        $imgs = $db->fetchAssocRows($query);
+
+        $this->images = array();
+        foreach ($imgs as $img) {
+            $this->images[] = $img['id'];
         }
     }
 
     public function sendValidation() {
         $email = new Email($this->getEmail());
 
-        $email->setSubject($GLOBAL['CONFIG']['sitetitle'] . " Email Validation");
+        $email->setSubject($GLOBALS['CONFIG']['sitetitle'] . " Email Validation");
 
         $url = $GLOBALS['CONFIG']['urlroot'] . '/validate.php?id=' . $this->getSecretId();
         
@@ -216,7 +265,7 @@ class Post {
     public function sendAcceptance() {
         $email = new Email($this->getEmail());
 
-        $email->setSubject($GLOBAL['CONFIG']['sitetitle'] . " Posting Approved");
+        $email->setSubject($GLOBALS['CONFIG']['sitetitle'] . " Posting Approved");
 
         $email->appendMessage("Your posting titled ". $this->getName()
             ." has been approved by our moderation team.\n\n");
@@ -231,7 +280,7 @@ class Post {
     public function sendRejection($message='') {
         $email = new Email($this->getEmail());
 
-        $email->setSubject($GLOBAL['CONFIG']['sitetitle'] . " Posting Rejected");
+        $email->setSubject($GLOBALS['CONFIG']['sitetitle'] . " Posting Rejected");
 
         $email->appendMessage("Your posting titled ". $this->getName()
             ." has been rejected by our moderation team.\n\n");

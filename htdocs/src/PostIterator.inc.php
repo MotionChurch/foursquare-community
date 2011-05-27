@@ -42,7 +42,7 @@ class PostIterator implements Iterator {
     }
 
     public function limit($limit) {
-        $this->limit = limit;
+        $this->limit = $limit;
     }
 
     public function rewind() {

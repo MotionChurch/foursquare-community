@@ -138,7 +138,8 @@ function finish_post() {
         );
 
     $error = '';
-    $values = array();
+    $values = array('title' => '', 'description' => '',
+        'email' => '', 'email2' => '');
     foreach ($required as $field => $desc) {
         if (!isset($_POST[$field]) or trim($_POST[$field]) == '') { 
             $error .= "<p>$desc is a required field.</p>";
@@ -188,9 +189,11 @@ function handle_images() {
 function finish_images() {
     $post = $_SESSION['newpost'];
 
-    if (isset($_FILES['images']) and is_array($_FILES['images'])) {
-        foreach ($_FILES['images'] as $file) {
-            $post->addImage($file['tmp_name']);
+    if (isset($_FILES['images'])) {
+        foreach ($_FILES["images"]["error"] as $key => $error) {
+            if ($error == UPLOAD_ERR_OK) {
+                $post->addImage($_FILES['images']['tmp_name'][$key]);
+            }
         }
     }
 
@@ -223,21 +226,25 @@ require_once "src/footer.inc.php";
 
 
 function render_form($error="") {
-    global $values;
+
+    $title = isset($_POST['title']) ? $_POST['title'] : '';
+    $description = isset($_POST['description']) ? $_POST['description'] : '';
+    $email = isset($_POST['email']) ? $_POST['email'] : '';
+    $email2 = isset($_POST['email2']) ? $_POST['email2'] : '';
 
     if ($error != '') {
         echo "<div class=\"errorbox\">$error</div>";
     }
 
-    echo "<p><label>Title: <input type=\"text\" name=\"title\" value=\"${_POST[title]}\" /></label></p>";
+    echo "<p><label>Title: <input type=\"text\" name=\"title\" value=\"$title\" /></label></p>";
 
     echo "<p><label for=\"desc\">Description:</label></p>";
     echo "<p><textarea name=\"description\" id=\"desc\" rows=\"10\""
-            . " cols=\"80\">${_POST[description]}</textarea></p>";
+            . " cols=\"80\">$description</textarea></p>";
 
-    echo "<p><label>Email Address: <input type=\"text\" name=\"email\" value=\"${_POST[email]}\" />"
+    echo "<p><label>Email Address: <input type=\"text\" name=\"email\" value=\"$email\" />"
             . "</label>";
-    echo " <label>Confirm Email: <input type=\"text\" name=\"email2\" value=\"${_POST[email2]}\" />"
+    echo " <label>Confirm Email: <input type=\"text\" name=\"email2\" value=\"$email2\" />"
             . "</label></p>"
             . "<p>Your email address will only be visible to our moderators.</p>";
 

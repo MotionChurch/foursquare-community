@@ -19,11 +19,12 @@ $CONFIG = array(
     'sitetitle'  => 'Foursquare Community',
     'email_from' => 'community@myfoursquarechurch.com',
 
-    'urlroot'   => 'http://localhost/~jesse/p4s/community/htdocs',
+    'urlroot'   => '/~jesse/p4s/community/htdocs',
     'root'      => '/home/jesse/Development/p4square/community/htdocs',
+    'uploads'   => '/home/jesse/Development/p4square/community/uploads',
 
     'debug'      => true,
-    'production' => false,
+    'production' => true,
 );
 
 set_include_path(get_include_path() . PATH_SEPARATOR . $CONFIG['root'].'/src');

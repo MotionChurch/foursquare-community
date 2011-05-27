@@ -50,9 +50,16 @@ if (isset($_GET['moderate'])) {
 
 echo "<h2>". $post->getName() ."</h2>";
 
-echo "<p>". $post->getDescription() ."</p>";
+echo "<p>Date: ". date('r', $post->getTimestamp()) ."</p>";
 
+echo "<p class=\"desc\">". 
+    str_replace("\n", '<br />', $post->getDescription())
+    ."</p>";
 
+foreach ($post->getImages() as $imgid) {
+    echo "<p><img src=\"". $GLOBALS['CONFIG']['urlroot']
+        . "/postimages/$imgid\" /></p>";
+}
 
 require_once "src/footer.inc.php";
 
