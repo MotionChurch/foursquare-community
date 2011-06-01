@@ -41,5 +41,10 @@ function __autoload($class) {
     require_once "$class.inc.php";
 }
 
+function buildUrl($tail='') {
+    return 'http://' . $GLOBALS['CONFIG']['domain']
+        . $GLOBALS['CONFIG']['urlroot'] . "/$tail";
+}
+
 
 ?>

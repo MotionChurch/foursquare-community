@@ -88,7 +88,7 @@ class Post {
         } else {
             // Creating... set special fields.
             $info['stage'] = 'verification';
-            $info['secretid'] = uniqid();
+            $info['secretid'] = uniqid('', true);
             $info['created'] = date('Y-m-d H:i:s');
             
             try {
@@ -106,6 +106,16 @@ class Post {
                 return false;
             }
         }
+    }
+
+    public function delete() {
+        $db = getDatabase();
+
+        // Delete Images
+        $db->delete('image', 'post_id=' . $this->getId());
+
+        // Delete Post
+        $db->delete('post', 'id=' . $this->getId());
     }
 
     public function getId() {
@@ -165,6 +175,10 @@ class Post {
 
     public function getEmail() {
         return $this->info['email'];
+    }
+
+    public function getPublicEmail() {
+        return 'posting-' . $this->getId() .'@'. $GLOBALS['CONFIG']['emaildomain'];
     }
 
     public function setEmail($value) {
@@ -254,7 +268,7 @@ class Post {
 
         $email->setSubject($GLOBALS['CONFIG']['sitetitle'] . " Email Validation");
 
-        $url = $GLOBALS['CONFIG']['urlroot'] . '/validate.php?id=' . $this->getSecretId();
+        $url = buildUrl('validate.php?id=' . $this->getSecretId());
         
         $email->appendMessage("Please click on the link below to verify your email address.\n\n");
         $email->appendMessage($url);
@@ -265,14 +279,22 @@ class Post {
     public function sendAcceptance() {
         $email = new Email($this->getEmail());
 
-        $email->setSubject($GLOBALS['CONFIG']['sitetitle'] . " Posting Approved");
+        $email->setSubject($GLOBALS['CONFIG']['sitetitle'] 
+            . " Posting Approved");
 
         $email->appendMessage("Your posting titled ". $this->getName()
             ." has been approved by our moderation team.\n\n");
 
-        $url = $GLOBALS['CONFIG']['urlroot'] . '/postings/'
-            . $this->getId() .'.html';
-        $email->appendMessage("You can view your post at $url.");
+        // View URL
+        $url = buildUrl('postings/' . $this->getId() . '.html');
+        $email->appendMessage("You can view your post at $url.\n\n");
+
+        // Delete URL
+        $url = buildUrl('deletepost.php?id=' . $this->getId()
+            . '&secret=' . $this->getSecretId());
+        $email->appendMessage("Your posting will expire in " .
+            $GLOBALS['CONFIG']['expiretime']
+            . " days. If you would like to remove it sooner, go to $url.\n");
 
         $email->send();
     }

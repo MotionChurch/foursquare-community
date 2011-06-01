@@ -51,6 +51,8 @@ if (isset($_GET['moderate'])) {
 echo "<h2>". $post->getName() ."</h2>";
 
 echo "<p>Date: ". date('r', $post->getTimestamp()) ."</p>";
+echo "<p>Email: <a href=\"mailto:". $post->getPublicEmail() ."\">"
+    . $post->getPublicEmail() ."</a></p>";
 
 echo "<p class=\"desc\">". 
     str_replace("\n", '<br />', $post->getDescription())

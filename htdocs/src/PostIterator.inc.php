@@ -37,6 +37,16 @@ class PostIterator implements Iterator {
         $this->where[] = "category_id='$category_id'";
     }
 
+    public function filterCreated($after, $before = false) {
+        $sqlafter = date('Y-m-d H:i:s', $after);
+        $this->where[] = "created > '$sqlafter'";
+
+        if ($before !== false) {
+            $sqlbefore = date('Y-m-d H:i:s', $before);
+            $this->where[] = "created < '$sqlbefore'";
+        }
+    }
+
     public function orderBy($order) {
         $this->order = $order;
     }

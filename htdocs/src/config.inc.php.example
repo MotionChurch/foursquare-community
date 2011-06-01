@@ -20,6 +20,7 @@ $CONFIG = array(
     'email_from'  => 'community@myfoursquarechurch.com',
     'emaildomain' => 'listandshare.com',
 
+    'domain'    => 'localhost',
     'urlroot'   => '/~jesse/p4s/community/htdocs',
     'root'      => '/Users/jesse/Development/P4Square/community/htdocs',
     'uploads'   => '/Users/jesse/Development/P4Square/community/uploads',
