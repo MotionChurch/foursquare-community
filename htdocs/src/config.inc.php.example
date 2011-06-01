@@ -16,15 +16,18 @@ $CONFIG = array(
     'dbname' => 'p4scommunity',
 
     // Site Information
-    'sitetitle'  => 'Foursquare Community',
-    'email_from' => 'community@myfoursquarechurch.com',
+    'sitetitle'   => 'Foursquare Community',
+    'email_from'  => 'community@myfoursquarechurch.com',
+    'emaildomain' => 'listandshare.com',
 
     'urlroot'   => '/~jesse/p4s/community/htdocs',
-    'root'      => '/home/jesse/Development/p4square/community/htdocs',
-    'uploads'   => '/home/jesse/Development/p4square/community/uploads',
+    'root'      => '/Users/jesse/Development/P4Square/community/htdocs',
+    'uploads'   => '/Users/jesse/Development/P4Square/community/uploads',
+
+    'expiretime' => 7, // days
 
     'debug'      => true,
-    'production' => true,
+    'production' => false,
 );
 
 set_include_path(get_include_path() . PATH_SEPARATOR . $CONFIG['root'].'/src');
