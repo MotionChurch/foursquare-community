@@ -10,6 +10,12 @@
 
 require_once('../../src/base.inc.php');
 
+// Verify User is admin
+if (!$_SESSION['currentUser']->isAdmin()) {
+    header('Location: ' . buildUrl('moderate/'));
+    exit;
+}
+
 $error = '';
 
 $user = false;
