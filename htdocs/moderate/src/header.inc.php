@@ -34,17 +34,18 @@ if (!isset($_SESSION['currentUser'])) {
 
 <div id="modnav">
     <ul>
-        <li><a href="">Moderate Posts</a></li>
+        <li><a href="<?= buildUrl('moderate/') ?>">Moderate Posts</a></li>
         
         <?php
             // Admin Navigation
             if ($_SESSION['currentUser']->isAdmin()) {
-                echo "<li><a href=\"". $CONFIG['urlroot'] ."/\">Pages</a></li>";
-                echo "<li><a href=\"". $CONFIG['urlroot'] ."/\">Users</a></li>";
+                echo "<li><a href=\"". buildUrl('moderate/pages/') ."\">Pages</a></li>";
+                echo "<li><a href=\"". buildUrl('moderate/users/') ."\">Users</a></li>";
             }
         ?>
 
-        <li><a href="">Account Settings</a></li>
+        <li><a href="<?= buildUrl('moderate/account.php') ?>">
+            Account Settings</a></li>
         <li><a href="">Logout</a></li>
     </ul>
 </div>

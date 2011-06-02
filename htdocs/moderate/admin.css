@@ -18,3 +18,38 @@ h1 {
     display: inline-block;
     margin-right: 1em;
 }
+
+.userrow {
+    padding-left: 5px;
+    width: 50em;
+    margin-bottom: 0.25em;
+}
+
+.header {
+    border-bottom: solid 2px black;
+    margin-bottom: 1em;
+}
+
+.header span {
+    font-weight: bold;
+}
+
+.userrow span {
+    display: inline-block;
+}
+
+.userrow .name {
+    width: 12em;
+}
+
+.userrow .email {
+    width: 20em;
+}
+
+.userrow .admin {
+    width: 5em;
+}
+
+input[type=text] {
+    width: 20em;
+}

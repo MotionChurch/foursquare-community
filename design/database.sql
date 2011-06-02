@@ -73,6 +73,7 @@ CREATE TABLE user (
     password    VARCHAR(40) NOT NULL,
     source_id   INTEGER     NOT NULL,
     admin       TINYINT(1)  NOT NULL DEFAULT 0,
+    notify      TINYINT(1)  NOT NULL,
 
     PRIMARY KEY(id),
     UNIQUE  KEY(email)

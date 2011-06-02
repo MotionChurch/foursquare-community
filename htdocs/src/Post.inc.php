@@ -98,6 +98,7 @@ class Post {
                     $this->info['id'] = $ret;
                     $this->info['stage'] = 'verification';
                     $this->info['secretid'] = $info['secretid'];
+                    $this->indatabase = true;
                 }
 
                 return true;
@@ -116,6 +117,8 @@ class Post {
 
         // Delete Post
         $db->delete('post', 'id=' . $this->getId());
+
+        $this->indatabase = false;
     }
 
     public function getId() {
