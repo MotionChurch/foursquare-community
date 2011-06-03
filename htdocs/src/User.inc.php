@@ -85,6 +85,7 @@ class User {
                     $this->info['id'] = $ret;
                     $this->indatabase = true;
                     $this->sendNewPassword();
+                    $this->save(); // Could do this better...
                 }
 
                 return true;
@@ -177,7 +178,7 @@ class User {
             $i++;
         }       
 
-        $this->userinfo['password'] = sha1($password);
+        $this->info['password'] = sha1($password);
 
         return $password;
     }       
