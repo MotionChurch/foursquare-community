@@ -110,15 +110,9 @@ class Post {
     }
 
     public function delete() {
-        $db = getDatabase();
-
-        // Delete Images
-        $db->delete('image', 'post_id=' . $this->getId());
-
-        // Delete Post
-        $db->delete('post', 'id=' . $this->getId());
-
-        $this->indatabase = false;
+        // Rather than deleting the post, archive it.
+        $this->info['stage'] = 'deleted';
+        $this->save();
     }
 
     public function getId() {

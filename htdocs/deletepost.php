@@ -48,8 +48,14 @@ if (isset($_GET['confirmed'])) {
 require_once "src/footer.inc.php";
 
 function errorNotFound() {
-    // TODO: Better 404 error
-    echo "404";
+    // Get the 404 page
+    $page = Page::getByUrl('404');
+    if ($page) {
+        echo $page->getContent();
+    } else {
+        echo "Error: Page not found.";
+    }
+    require_once "src/footer.inc.php";
     exit;
 }
 

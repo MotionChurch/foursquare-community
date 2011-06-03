@@ -54,7 +54,8 @@ CREATE TABLE post (
     stage      ENUM('verification',
                     'moderation',
                     'approved',
-                    'rejected') NOT NULL DEFAULT 'verification',
+                    'rejected',
+                    'deleted') NOT NULL DEFAULT 'verification',
 
     PRIMARY KEY(id),
     UNIQUE  KEY(secretid)

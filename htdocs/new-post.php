@@ -22,9 +22,9 @@ echo "<h2>New Posting</h2>";
  * 2) ToS
  * 3) Title, Desc, Location, email
  * 4) Images
- * 5) Notify about email
+ * 5) Source
+ * 6) Notify about email
  * 
- * TODO: Set the source of the post.
  */
 
 $stage = 'category';
