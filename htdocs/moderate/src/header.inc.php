@@ -14,6 +14,16 @@ if (!isset($_SESSION['currentUser'])) {
     <link rel="stylesheet" href="<?= $CONFIG['urlroot'] ?>/css/main.css" />
     <link rel="stylesheet" href="<?= $CONFIG['urlroot'] ?>/moderate/admin.css" />
 
+    <script type="text/javascript" src="<?= $CONFIG['urlroot'] ?>/js/tiny_mce/tiny_mce.js" ></script>
+    <script type="text/javascript" >
+        tinyMCE.init({
+                mode : "exact",
+                elements : "contentarea",
+                theme : "advanced",
+                theme_advanced_toolbar_location : "top",
+                theme_advanced_toolbar_align : "left"
+        });
+    </script>
 </head>
 <body>
 <div id="header">

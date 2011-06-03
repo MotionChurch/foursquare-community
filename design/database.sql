@@ -79,8 +79,9 @@ CREATE TABLE user (
     UNIQUE  KEY(email)
 );
 
-CREATE TABLE pages (
+CREATE TABLE page (
     id          INTEGER     UNSIGNED NOT NULL AUTO_INCREMENT,
+    title       VARCHAR(60) NOT NULL,
     url         VARCHAR(60) NOT NULL,
     content     TEXT NOT NULL,
 

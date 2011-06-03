@@ -23,8 +23,8 @@
     <ul>
         <li><a href="<?= $CONFIG['urlroot'] ?>/new-post" class="bigbutton">
             Create Post</a></li>
-        <li><a href="" class="bigbutton">Safety Tips</a></li>
-        <li><a href="" class="bigbutton">Contact Us</a></li>
+        <li><a href="<?= buildUrl('page/safety.html') ?>" class="bigbutton">Safety Tips</a></li>
+        <li><a href="<?= buildUrl('page/contact.html') ?>" class="bigbutton">Contact Us</a></li>
     </ul>
 </div>
 
