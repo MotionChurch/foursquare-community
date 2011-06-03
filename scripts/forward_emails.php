@@ -9,7 +9,7 @@
  *
  */
 
-require_once "../htdocs/src/base.inc.php";
+require_once __DIR__ . "/../htdocs/src/base.inc.php";
 
 // Read the email
 $fd = fopen("php://stdin", "r");
@@ -67,7 +67,7 @@ foreach ($splitmsg as $line) {
 preg_match("/posting-(.+)@.+/", $to, $identifiers);
 
 if (!isset($identifiers[1]) or !is_numeric($identifiers[1])) {
-    mailFailure("Invalid id");
+    mailFailure("Invalid id. '$to' " . print_r($identifiers, true));
 }
 
 $id = $identifiers[1];
@@ -82,15 +82,15 @@ if (!$post or $post->getStage() != 'approved') {
 $newsubject = "[" . $CONFIG['sitetitle'] . "] $subject";
 
 if (mail($post->getEmail(), $newsubject, $message, $headers)) {
-    exit 0;
+    exit(0);
 
 } else {
-    exit 2;
+    exit(2);
 }
 
 function mailFailure($message='') {
     echo "5.1.1 $message\n";
-    exit 1;
+    exit(1);
 }
 
 ?>
