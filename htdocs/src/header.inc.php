@@ -8,7 +8,7 @@
 </head>
 <body>
 <div id="header">
-    <p><a href="<?= $CONFIG['urlroot'] ?>">
+    <p><a href="<?= buildUrl() ?>">
         <img src="<?= $CONFIG['urlroot'] ?>/images/logo.png" 
         alt="<?= $CONFIG['sitetitle'] ?>" /></a></p>
 
