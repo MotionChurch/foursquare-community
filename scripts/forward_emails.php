@@ -47,8 +47,11 @@ foreach ($splitmsg as $line) {
                     $subject = $header[1];
                     break;
 
-                case 'delivered-to':
+                case 'x-original-to':
                     $to = $header[1];
+                    break;
+
+                case 'delivered-to':
                     break;
 
                 default:
