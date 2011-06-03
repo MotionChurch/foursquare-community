@@ -136,6 +136,7 @@ function finish_post() {
     
     $required = array(
         'title'       => 'Title',
+        'location'    => 'Location',
         'description' => 'Description',
         'email'       => 'Email Address',
         'email2'      => 'Confirm Email Address',
@@ -161,6 +162,7 @@ function finish_post() {
         $post->setEmail($values['email']);
         $post->setName($values['title']);
         $post->setDescription($values['description']);
+        $post->setLocation($values['location']);
 
         if ($post->save()) {
             return true;
@@ -288,6 +290,7 @@ require_once "src/footer.inc.php";
 function render_form($error="") {
 
     $title = isset($_POST['title']) ? $_POST['title'] : '';
+    $location = isset($_POST['location']) ? $_POST['location'] : '';
     $description = isset($_POST['description']) ? $_POST['description'] : '';
     $email = isset($_POST['email']) ? $_POST['email'] : '';
     $email2 = isset($_POST['email2']) ? $_POST['email2'] : '';
@@ -297,6 +300,8 @@ function render_form($error="") {
     }
 
     echo "<p><label>Title: <input type=\"text\" name=\"title\" value=\"$title\" /></label></p>";
+
+    echo "<p><label>Location: <input type=\"text\" name=\"location\" value=\"$location\" /></label></p>";
 
     echo "<p><label for=\"desc\">Description:</label></p>";
     echo "<p><textarea name=\"description\" id=\"desc\" rows=\"10\""

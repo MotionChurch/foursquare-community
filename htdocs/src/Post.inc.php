@@ -233,6 +233,10 @@ class Post {
         return $this->info['location'];
     }
 
+    public function setLocation($value) {
+        $this->info['location'] = $value;
+    }
+
     public function getImages() { 
         if ($this->images == null) {
             $this->loadImages();
