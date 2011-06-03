@@ -23,6 +23,10 @@ class Email {
         $this->headers = array();
     }
 
+    public function setTo($to) {
+        $this->to = $to;
+    }
+
     public function setFrom($from) {
         $this->from = $from;
 

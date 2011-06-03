@@ -175,6 +175,7 @@ class Post {
     public function verify() {
         if ($this->getStage() == 'verification') {
             $this->info['stage'] = 'moderation';
+            $this->notifyModerators();
         }
     }
 
@@ -332,6 +333,25 @@ class Post {
         }
 
         $email->send();
+    }
+
+    public function notifyModerators() {
+        $ui = new UserIterator();
+        $ui->filterNotify(true);
+        $ui->query();
+
+        $url = buildUrl('postings/' . $this->getId() .'.html?moderate');
+
+        $email = new Email('');
+        $email->setSubject('[' . $GLOBALS['CONFIG']['sitetitle'] . '] New Posting to Moderate');
+        $email->appendMessage("A new posting is awaiting moderation.\nYou can view the post at $url");
+
+        if ($ui->valid()) {
+            foreach($ui as $user) {
+                $email->setTo($user->getEmail());
+                $email->send();
+            }
+        }
     }
 }
 
