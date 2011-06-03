@@ -26,6 +26,7 @@ CREATE TABLE category (
     id          INTEGER     UNSIGNED NOT NULL AUTO_INCREMENT,
     shortname   VARCHAR(30) NOT NULL,
     name        VARCHAR(30) NOT NULL,
+    description VARCHAR(255) NOT NULL,
 
     PRIMARY KEY(id)
 );
@@ -93,11 +94,11 @@ CREATE TABLE page (
 
 -- The following creates some sample data
 INSERT INTO category (name, shortname) VALUES 
+    ('Give',    'give'),
+    ('Needs',   'needs'),
     ('Jobs',    'jobs'), 
     ('Housing', 'housing'),
-    ('Events',  'events'),
-    ('For Sale','forsale'),
-    ('Needs',   'needs');
+    ('Events',  'events');
 
 INSERT INTO source (name) VALUES ('Foursquare Church');
 
