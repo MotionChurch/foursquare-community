@@ -149,6 +149,28 @@ class Post {
         return $this->info['stage'];
     }
 
+    public function getSource() {
+        if ($this->info['source_id'] != 0) {
+            return $this->info['source_id'];
+        
+        } else {
+            return false;
+        }
+    }
+
+    public function getOtherSource() {
+        return $this->info['reason'];
+    }
+
+    public function setSource($value) {
+        $this->info['source_id'] = $value;
+    }
+
+    public function otherSource($value) {
+        $this->info['source_id'] = 0;
+        $this->info['reason'] = $value;
+    }
+
     public function approve() {
         if ($this->getStage() == 'moderation') {
             $this->info['stage'] = 'approved';

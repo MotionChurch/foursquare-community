@@ -57,8 +57,13 @@ switch ($stage) {
             handle_images();
         break;
 
-    case 'finish':
+    case 'source':
         if (finish_images())
+            handle_source();
+        break;
+
+    case 'finish':
+        if (finish_source())
             handle_finish();
         break;
 
@@ -100,12 +105,11 @@ function finish_category() {
 
 function handle_tos() {
     // Display ToS
-    // TODO: Display ToS Here
-
     form_start('post');
 
     echo "<p><label><input type=\"checkbox\" name=\"tos\" value=\"1\" />"
-            ." I agree to the terms of service.</label></p>";
+            ." I agree to the <a href=\"". buildUrl('page/tou.html')
+            ."\">terms of service</a>.</label></p>";
 
     form_end();
 }
@@ -176,7 +180,7 @@ function handle_images() {
     // Display image form
     echo "<p>You may upload up to four images with your post.</p>";
 
-    form_start('finish');
+    form_start('source');
 
     for ($i = 1; $i <= MAX_IMAGE_UPLOADS; $i++) {
         echo "<p><label>Image $i: "
@@ -198,6 +202,62 @@ function finish_images() {
     }
 
     return true;
+}
+
+function handle_source($error='') {
+    form_start('finish');
+
+    if ($error != '') {
+        echo "<div class=\"errorbox\">$error</div>";
+    }
+
+    echo "<p>Where did you hear about this site?</p>";
+
+    echo "<select name=\"source\">";
+
+    foreach(Source::getSources() as $source) {
+        echo "<option value=\"". $source->getId() ."\">"
+            . $source->getName() ."</option>";
+    }
+
+    echo "<option value=\"0\">Other</option>";
+    echo "</select>";
+
+    echo "<p>If you selecte other, please explain:";
+    echo " <input type=\"text\" name=\"explain\" /></p>";
+
+    form_end();
+}
+
+function finish_source() {
+    $error = '<p>This question is required.</p>';
+
+    $post = $_SESSION['newpost'];
+    if (isset($_POST['source']) and is_numeric($_POST['source'])) {
+        if ($_POST['source'] == 0) {
+            if (isset($_POST['explain']) and trim($_POST['explain']) != '') {
+                $post->otherSource($_POST['explain']);
+                $post->save();
+                return true;
+
+            } else {
+                $error = '<p>Explaination is a required field.</p>';
+            }
+
+        } else {
+            $source = Source::getById($_POST['source']);
+
+            if ($source) {
+                $post->setSource($_POST['source']);
+                $post->save();
+                return true;
+            }
+        }
+
+    }
+
+    handle_source($error);
+    return false;
 }
 
 function handle_finish() {

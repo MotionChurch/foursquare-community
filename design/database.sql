@@ -50,6 +50,7 @@ CREATE TABLE post (
     secretid    VARCHAR(32)  NOT NULL,
 
     source_id   INTEGER     UNSIGNED NOT NULL,
+    reason      VARCHAR(255) NULL,
     stage      ENUM('verification',
                     'moderation',
                     'approved',
