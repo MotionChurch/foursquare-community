@@ -29,6 +29,7 @@ $message = "";
 $splitmsg = split("\n", $email);
 
 $inheaders = true;
+array_shift($splitmsg); // Ignore the first line, postfix garbage
 foreach ($splitmsg as $line) {
     if ($inheaders) {
         // This is a header
@@ -39,9 +40,6 @@ foreach ($splitmsg as $line) {
             $header = split(':', $line, 2);
         
             switch (strtolower(trim($header[0]))) {
-                case 'from':
-                    $from = $header[1];
-                    break;
 
                 case 'subject':
                     $subject = $header[1];
@@ -53,6 +51,13 @@ foreach ($splitmsg as $line) {
 
                 case 'delivered-to':
                     break;
+       
+                case 'to':
+            break;
+
+                case 'from':
+                    $from = $header[1];
+                    // Intentionally fall through here        
 
                 default:
                     $headers .= "$line\n";
