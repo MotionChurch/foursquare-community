@@ -58,6 +58,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $notify = isset($_POST['notify']) and $_POST['notify'] == '1';
     $user->setNotify($notify);
 
+    // Send new password
+    if (isset($_POST['newpass']) and $_POST['newpass'] == '1') {
+        $user->sendNewPassword();
+    }
+
     // Save the user
     if ($error == '') {
         if ($user->save()) {
@@ -97,6 +102,13 @@ Administrator</label></p>
 <p><label>
 <input type="checkbox" name="notify" value="1" <?= $user->getNotify() ? 'checked="checked"' : '' ?> />
 Notify of posts</label></p>
+
+<?php
+    if (isset($_GET['id'])) {
+        echo "<p><label><input type=\"checkbox\" name=\"newpass\" value=\"1\" />"
+            . "Send new password</label></p>";
+    }
+?>
 
 <p>
 <input type="submit" class="bigbutton" value="Save" />

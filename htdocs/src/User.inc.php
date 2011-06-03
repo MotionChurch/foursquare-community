@@ -11,6 +11,8 @@
 require_once "base.inc.php";
 
 class User {
+    const GENERATED_PASSSWORD_LENGTH = 12;
+
     private $info;
     private $indatabase;
 
@@ -82,6 +84,7 @@ class User {
                 if ($ret) {
                     $this->info['id'] = $ret;
                     $this->indatabase = true;
+                    $this->sendNewPassword();
                 }
 
                 return true;
@@ -151,6 +154,34 @@ class User {
     public function setAdmin($value) {
         $this->info['admin'] = $value ? 1 : 0;
     }
+
+    public function sendNewPassword() {
+        $password = $this->generatePassword();
+        $url = buildUrl('moderate/');
+
+        $email = new Email($this->getEmail());
+        $email->setSubject('Your ' . $GLOBALS['CONFIG']['sitetitle'] . ' Moderation Account');
+        $email->appendMessage('Your ' . $GLOBALS['CONFIG']['sitetitle']
+            . " moderation account password is $password\n\n"
+            . "You can access the moderation page at $url.\n");
+
+        $email->send();
+    }
+
+    public function generatePassword() {
+        $chars = "23456789abcdefghjkmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ";
+        $i = 0;
+        $password = "";
+        while ($i <= self::GENERATED_PASSSWORD_LENGTH) {
+            $password .= $chars{mt_rand(0, strlen($chars)-1)};
+            $i++;
+        }       
+
+        $this->userinfo['password'] = sha1($password);
+
+        return $password;
+    }       
+
 }
 
 ?>
