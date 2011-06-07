@@ -13,9 +13,9 @@
         alt="<?= $CONFIG['sitetitle'] ?>" /></a></p>
 
     <div id="about">
-        Foursquare community is a place where you can find help,
+        List-and-Share is a place where you can find help,
         sell merchandise, list events or even post your rental.
-        We want to build a help you get connected to the community of our church!
+        We want to build a help you get connected to the community of the church!
     </div>
 </div>
 
