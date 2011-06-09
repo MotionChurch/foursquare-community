@@ -12,10 +12,16 @@ require_once "base.inc.php";
 
 class Category {
     private $info;
-
+    private $options = array('price' => false);
 
     public function __construct($info=null) {
         $this->info = $info;
+
+        if (isset($this->info['options'])) {
+            foreach (split(',', $this->info['options']) as $op) {
+                $this->options[$op] = true;
+            }
+        }
     }
 
     public static function getCategories() {
@@ -54,8 +60,7 @@ class Category {
         $row = $db->fetchAssocRow($query);
 
         if ($row) {
-            $category = new Category();
-            $category->info = $row;
+            $category = new Category($row);
 
             return $category;
 
@@ -85,7 +90,14 @@ class Category {
     public function getDescription() {
         return htmlspecialchars($this->info['description']);
     }
+
+    public function getOption($name) {
+        return $this->options[$name]; 
+    }
+
+    public function setOption($value) {
+        $this->options[$name] = $value;
+    }
 }
 
 ?>
-

@@ -98,7 +98,7 @@ CREATE TABLE page (
 INSERT INTO `category` (`shortname`, `name`, `description`, `options`)
 VALUES
     ('free', 'Free Items', 'Do you have something of value someone could use and you want to give it away?', ''),
-    ('sale', 'For Sale', 'Do you have something you no longer need and want to sell it?', 'price'),
+    ('forsale', 'For Sale', 'Do you have something you no longer need and want to sell it?', 'price'),
     ('needs', 'Needs', 'Do you need something (furniture, job, housing, etc) that someone might be able to help with?', ''),
     ('events', 'Events', 'Do you have an upcoming event (qualifying statement here?) you would like to announce?', 'price'),
     ('jobs', 'Jobs', 'Do you have a job/position to fill and you''d like to tell people about?', 'price'),

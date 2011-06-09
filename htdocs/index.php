@@ -22,12 +22,17 @@ $posts->query();
 
 if ($posts->valid()) {
     foreach ($posts as $id => $post) {
+        $title = $post->getName();
+        if ($post->getPrice() != 0) {
+            $title .= ' - $' . $post->getPrice();
+        }
+
         printf("<div class=\"post\"><p><a href=\"". $GLOBALS['CONFIG']['urlroot']
                 . "/postings/%s.html\">%s</a></p>"
                 . "<div class=\"desc\"><span class=\"location\">%s</span>"
                 . " <span class=\"age\">%s</span></div></div>",
                 
-                $id, $post->getName(), $post->getLocation(), $post->getAge());
+                $id, $title, $post->getLocation(), $post->getAge());
     }
 
 } else {

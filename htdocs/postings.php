@@ -48,7 +48,14 @@ if (isset($_GET['moderate'])) {
 
 // Display the post.
 
-echo "<h2>". $post->getName() ."</h2>";
+echo "<h2>". $post->getName();
+
+if ($post->getPrice() != 0) {
+    echo ' - $' . $post->getPrice();
+}
+
+echo "</h2>";
+
 
 echo "<p>Date: ". date('r', $post->getTimestamp()) ."</p>";
 echo "<p>Email: <a href=\"mailto:". $post->getPublicEmail() ."\">"

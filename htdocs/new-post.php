@@ -99,7 +99,7 @@ function finish_category() {
     if (isset($_GET['category'])) {
         $category = Category::getByShortname(addslashes($_GET['category']));
         if ($category) {
-            $post->setCategory($category->getId());
+            $post->setCategory($category);
             return true;
         }
     }
@@ -168,6 +168,11 @@ function finish_post() {
         $post->setName($values['title']);
         $post->setDescription($values['description']);
         $post->setLocation($values['location']);
+        
+        // Price is optional
+        if (isset($_POST['price'])) {
+            $post->setPrice($_POST['price']);
+        }
 
         if ($post->save()) {
             return true;
@@ -293,8 +298,10 @@ require_once "src/footer.inc.php";
 
 
 function render_form($error="") {
+    $category = $_SESSION['newpost']->getCategory();
 
     $title = isset($_POST['title']) ? $_POST['title'] : '';
+    $price = isset($_POST['price']) ? $_POST['price'] : '';
     $location = isset($_POST['location']) ? $_POST['location'] : '';
     $description = isset($_POST['description']) ? $_POST['description'] : '';
     $email = isset($_POST['email']) ? $_POST['email'] : '';
@@ -304,7 +311,14 @@ function render_form($error="") {
         echo "<div class=\"errorbox\">$error</div>";
     }
 
-    echo "<p><label>Title: <input type=\"text\" name=\"title\" value=\"$title\" /></label></p>";
+    echo "<p><label>Title: <input type=\"text\" name=\"title\" value=\"$title\" /></label>";
+    
+    if ($category->getOption('price')) {
+        echo " <label>Price: $<input type=\"text\" name=\"price\" value=\"$price\" /></label>";
+    }
+
+    
+    echo "</p>";
 
     echo "<p><label>Location: <input type=\"text\" name=\"location\" value=\"$location\" /></label></p>";
 

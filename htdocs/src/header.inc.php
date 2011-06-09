@@ -31,9 +31,19 @@
 <div id="buttonblock">
     <p>What are you looking for?</p>
     <div>
+        <a href="<?= $CONFIG['urlroot'] ?>/categories/free"><img src="<?= $CONFIG['urlroot'] ?>/images/tag.png" alt="Free Items" /></a>
+        <br />
+        <a href="<?= $CONFIG['urlroot'] ?>/categories/free" class="smallbutton">Free Items</a>
+    </div>
+    <div>
         <a href="<?= $CONFIG['urlroot'] ?>/categories/forsale"><img src="<?= $CONFIG['urlroot'] ?>/images/tag.png" alt="For Sale" /></a>
         <br />
         <a href="<?= $CONFIG['urlroot'] ?>/categories/forsale" class="smallbutton">For Sale</a>
+    </div>
+    <div>
+        <a href="<?= $CONFIG['urlroot'] ?>/categories/needs"><img src="<?= $CONFIG['urlroot'] ?>/images/tag.png" alt="Needs" /></a>
+        <br />
+        <a href="<?= $CONFIG['urlroot'] ?>/categories/needs" class="smallbutton">Needs</a>
     </div>
     <div>
         <a href="<?= $CONFIG['urlroot'] ?>/categories/events"><img src="<?= $CONFIG['urlroot'] ?>/images/calendar.png" alt="Events" /></a>

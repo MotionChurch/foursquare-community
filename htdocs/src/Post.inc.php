@@ -14,6 +14,7 @@ class Post {
     private $info;
     private $indatabase = false;
     private $images;
+    private $category;
 
 
     public function __construct($info=null) {
@@ -26,7 +27,8 @@ class Post {
             $this->indatabase = false;
         }
 
-        $images = null;
+        $this->images = null;
+        $this->category = null;
     }
 
     public static function getById($id) {
@@ -205,8 +207,17 @@ class Post {
         $this->info['email'] = $value;
     }
 
-    public function setCategory($value) {
-        $this->info['category_id'] = $value;
+    public function setCategory(Category $cat) {
+        $this->info['category_id'] = $cat->getId();
+        $this->category = $cat;
+    }
+
+    public function getCategory() {
+        if ($this->category == NULL) {
+            $this->category = Categories::getById($this->info['category_id']);
+        }
+
+        return $this->category;
     }
 
     public function getAge() {
@@ -235,6 +246,14 @@ class Post {
 
     public function setLocation($value) {
         $this->info['location'] = $value;
+    }
+
+    public function getPrice() {
+        return $this->info['price'];
+    }
+
+    public function setPrice($value) {
+        $this->info['price'] = $value;
     }
 
     public function getImages() { 
