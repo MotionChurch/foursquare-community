@@ -36,10 +36,13 @@ function listCategories() {
     echo "<h2>Categories</h2>";
 
     $cats = Category::getCategories();
-    foreach ($cats as $short => $name) {
+    echo "<dl>";
+    foreach ($cats as $short => $cat) {
         $url = $GLOBALS['CONFIG']['urlroot'] . "/categories/$short";
-        echo "<p><a href=\"$url\">$name</a></p>";
+        echo "<dt><a href=\"$url\">". $cat->getName() ."</a></dt>";
+        echo "<dd>". $cat->getDescription() ."</dd>";
     }
+    echo "</dl>";
 }
 
 function displayEvents($category) {

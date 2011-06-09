@@ -81,11 +81,16 @@ function handle_category() {
     echo "<p>Start by choosing a category from the list below</p>";
 
     // List Categories
-    foreach (Category::getCategories() as $short => $name) {
-        echo "<p><a href=\"". $GLOBALS['CONFIG']['urlroot']
-            . "/new-post.php?stage=tos&category=$short\">$name</a></p>";
+    $cats = Category::getCategories();
+    echo "<dl>";
+    foreach ($cats as $short => $cat) {
+        $url = $GLOBALS['CONFIG']['urlroot']
+            . "/new-post.php?stage=tos&category=$short";
+
+        echo "<dt><a href=\"$url\">". $cat->getName() ."</a></dt>";
+        echo "<dd>". $cat->getDescription() ."</dd>";
     }
-    
+    echo "</dl>";
 }
 
 function finish_category() {

@@ -27,7 +27,8 @@ class Category {
        
         $result = array();
         foreach ($rows as $row) {
-            $result[$row['shortname']] = $row['name'];
+            $cat = new Category($row);
+            $result[$row['shortname']] = $cat;
         }
 
         return $result;
@@ -79,6 +80,10 @@ class Category {
 
     public function getShortname() {
         return htmlspecialchars($this->info['shortname']);
+    }
+
+    public function getDescription() {
+        return htmlspecialchars($this->info['description']);
     }
 }
 

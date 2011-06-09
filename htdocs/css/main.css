@@ -22,7 +22,7 @@ body {
     margin: 0 1.5em 0 1.5em;
 }
 
-.bigbutton {
+.bigbutton, .bigbutton:visited {
     background: url('../images/bigbutton.png') repeat-x center top;
     color: white;
     padding: 0.3em 1em 0.3em 1em;
@@ -30,7 +30,7 @@ body {
     border-radius: 5px;
 }
 
-.smallbutton {
+.smallbutton, .smallbutton:visited {
     background: url('../images/smallbutton.png') repeat-x center top;
     color: white;
     padding: 0.3em 1em 0.3em 1em;
@@ -84,6 +84,19 @@ body {
     padding-top: 10px;
     text-transform: uppercase;
 
+}
+
+dt {
+    margin-top: 1.5em;
+    margin-bottom: 0.25em;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: larger;
+}
+
+a, a:visited {
+    text-decoration: none;
+    color: blue;
 }
 
 .post {

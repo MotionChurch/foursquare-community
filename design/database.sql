@@ -27,6 +27,7 @@ CREATE TABLE category (
     shortname   VARCHAR(30) NOT NULL,
     name        VARCHAR(30) NOT NULL,
     description VARCHAR(255) NOT NULL,
+    options     SET('price') NOT NULL,
 
     PRIMARY KEY(id)
 );
@@ -46,6 +47,7 @@ CREATE TABLE post (
     created     DATETIME    NOT NULL,
     description TEXT        NOT NULL,
     location    VARCHAR(100) NOT NULL,
+    price       DECIMAL(10,2) NULL, 
     
     email       VARCHAR(255) NOT NULL,
     secretid    VARCHAR(32)  NOT NULL,
@@ -93,12 +95,14 @@ CREATE TABLE page (
 );
 
 -- The following creates some sample data
-INSERT INTO category (name, shortname) VALUES 
-    ('Give',    'give'),
-    ('Needs',   'needs'),
-    ('Jobs',    'jobs'), 
-    ('Housing', 'housing'),
-    ('Events',  'events');
+INSERT INTO `category` (`shortname`, `name`, `description`, `options`)
+VALUES
+    ('free', 'Free Items', 'Do you have something of value someone could use and you want to give it away?', ''),
+    ('sale', 'For Sale', 'Do you have something you no longer need and want to sell it?', 'price'),
+    ('needs', 'Needs', 'Do you need something (furniture, job, housing, etc) that someone might be able to help with?', ''),
+    ('events', 'Events', 'Do you have an upcoming event (qualifying statement here?) you would like to announce?', 'price'),
+    ('jobs', 'Jobs', 'Do you have a job/position to fill and you''d like to tell people about?', 'price'),
+    ('housing', 'Housing', 'Do you have housing in the East Pierce County area you''d like to make people aware of?', 'price');
 
 INSERT INTO source (name) VALUES ('Foursquare Church');
 
