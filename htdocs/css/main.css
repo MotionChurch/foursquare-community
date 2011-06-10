@@ -85,7 +85,7 @@ body {
     border-top: solid 1px black;
     padding-top: 10px;
     text-transform: uppercase;
-
+    width: 660px;
 }
 
 dt {
