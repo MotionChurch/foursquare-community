@@ -6,7 +6,7 @@ body {
     font-family: Helvetica;
 }
 
-#nav, #buttonblock, #content, #footer {
+#nav, #content, #footer {
     width: 50%;
     margin: 0 auto 0 auto;
 }
@@ -64,6 +64,8 @@ body {
     border-bottom: solid 1px black;
     text-align: center;
     padding-bottom: 1em;
+    width: 660px;
+    margin: 0 auto 0 auto;
 }
 
 #buttonblock p {
