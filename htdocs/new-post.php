@@ -114,7 +114,7 @@ function handle_tos() {
 
     echo "<p><label><input type=\"checkbox\" name=\"tos\" value=\"1\" />"
             ." I agree to the <a href=\"". buildUrl('page/tou.html')
-            ."\">terms of service</a>.</label></p>";
+            ."\">terms of use</a>.</label></p>";
 
     form_end();
 }
