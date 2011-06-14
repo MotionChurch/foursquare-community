@@ -21,7 +21,9 @@ if (!isset($_SESSION['currentUser'])) {
                 elements : "contentarea",
                 theme : "advanced",
                 theme_advanced_toolbar_location : "top",
-                theme_advanced_toolbar_align : "left"
+                theme_advanced_toolbar_align : "left",
+                document_base_url : "<?= buildUrl() ?>",
+                relative_urls : false
         });
     </script>
 </head>
@@ -48,7 +50,7 @@ if (!isset($_SESSION['currentUser'])) {
         
         <?php
             // Admin Navigation
-            if ($_SESSION['currentUser']->isAdmin()) {
+            if (isset($_SESSION['currentUser']) and $_SESSION['currentUser']->isAdmin()) {
                 echo "<li><a href=\"". buildUrl('moderate/pages/') ."\">Pages</a></li>";
                 echo "<li><a href=\"". buildUrl('moderate/users/') ."\">Users</a></li>";
             }

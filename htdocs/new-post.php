@@ -120,7 +120,7 @@ function handle_tos() {
 }
 
 function finish_tos() {
-    if (isset($_POST['tos']) and $_POST['tos'] == 1) {
+    if (isset($_REQUEST['tos']) and $_REQUEST['tos'] == 1) {
        return true;
 
     } else {

@@ -6,9 +6,9 @@ body {
     font-family: Helvetica;
 }
 
-#nav, #content, #footer {
-    width: 50%;
+#nav, #content, #footer, #buttonblock {
     margin: 0 auto 0 auto;
+    width: 660px;
 }
 
 #nav ul {
@@ -64,7 +64,6 @@ body {
     border-bottom: solid 1px black;
     text-align: center;
     padding-bottom: 1em;
-    width: 660px;
     margin: 0 auto 0 auto;
 }
 
