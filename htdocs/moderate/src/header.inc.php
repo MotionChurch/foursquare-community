@@ -6,6 +6,12 @@ if (!isset($_SESSION['currentUser'])) {
     exit();
 }
 
+if (isset($_GET['logout'])) {
+    unset($_SESSION['currentUser']);
+    header('Location: ' . buildUrl());
+    exit();
+}
+
 ?><!DOCTYPE html>
 <html>
 <head>
@@ -58,7 +64,7 @@ if (!isset($_SESSION['currentUser'])) {
 
         <li><a href="<?= buildUrl('moderate/account.php') ?>">
             Account Settings</a></li>
-        <li><a href="">Logout</a></li>
+        <li><a href="<?= buildUrl('moderate/?logout') ?>">Logout</a></li>
     </ul>
 </div>
 

@@ -28,23 +28,36 @@ if (!is_numeric($id)) {
 // Get the post.
 $post = Post::getById($id);
 
-if (!$post or (!isset($_GET['moderate']) and $post->getStage() != 'approved')) {
+if (!$post or (!isset($_SESSION['currentUser']) and $post->getStage() != 'approved')) {
     errorNotFound();
 }
 
-if (isset($_GET['moderate'])) {
-    if (!isset($_SESSION['currentUser'])) {
-        header('Location: ' . $CONFIG['urlroot'].'/moderate/login.php');
-        exit();
+if (isset($_SESSION['currentUser'])) {
+
+    if ($post->getStage() != 'approved') {
+        // Post waiting for approval...
+        echo "<div class=\"moderationbox\">You are moderating this post: ";
+        printf("<a href=\"../moderate/moderate.php?id=%s&action=approve\">approve</a> "
+            . "<a href=\"../moderate/moderate.php?id=%s&action=reject\">reject</a>",
+            $post->getid(), $post->getid());
+        echo "<p><a href=\"../moderate/index.php\">return to moderation</a></p>";
+        echo "</div>";
+
+
+    } else {
+        // Post already approved
+        if ($_SESSION['currentUser']->isAdmin()) {
+            echo "<div class=\"moderationbox\">Administrative options:<br />";
+            
+            printf("<a href=\"../moderate/moderate.php?id=%s&action=delete\">delete post</a><br />"
+                . "<a href=\"../moderate/moderate.php?id=%s&action=reject\">reject post</a>",
+                $post->getid(), $post->getid());
+            echo "</div>";
+        }
     }
-    echo "<div class=\"moderationbox\">You are moderating this post: ";
-    printf("<a href=\"../moderate/moderate.php?id=%s&action=approve\">Approve</a> "
-        . "<a href=\"../moderate/moderate.php?id=%s&action=reject\">Reject</a>",
-        $post->getId(), $post->getId());
-    echo "<p><a href=\"../moderate/index.php\">Return to moderation</a></p>";
-    echo "</div>";
 
 }
+
 
 // Display the post.
 

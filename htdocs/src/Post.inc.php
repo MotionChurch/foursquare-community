@@ -168,10 +168,8 @@ class Post {
     }
 
     public function approve() {
-        if ($this->getStage() == 'moderation') {
-            $this->info['stage'] = 'approved';
-            $this->sendAcceptance();
-        }
+        $this->info['stage'] = 'approved';
+        $this->sendAcceptance();
     }
 
     public function verify() {

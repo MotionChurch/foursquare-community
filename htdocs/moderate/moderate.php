@@ -32,6 +32,12 @@ if (isset($_GET['id']) and is_numeric($_GET['id'])) {
                 case 'reject':
                     $post->reject();
                     break;
+
+                case 'delete':
+                    if ($_SESSION['currentUser']->isAdmin()) {
+                        $post->delete();
+                    }
+                    break;
             }
 
             $post->save();
