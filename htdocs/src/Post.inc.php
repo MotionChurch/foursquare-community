@@ -271,6 +271,25 @@ class Post {
         }
 
         // TODO Verify image dimensions?
+        if ($info[0] > self::MAX_IMAGE_WIDTH
+            or $info[1] > self::MAX_IMAGE_HEIGHT) {
+
+            $ratio = $info[0] / $info[1];
+
+            if ($ratio > 1) {
+                // Width limited
+                $width = min($info[0], self::MAX_IMAGE_WIDTH);
+                $height = $info[1] / $ratio;
+
+            } else {
+                // Height limited
+
+            }
+            
+            $width = min($info[0], self::MAX_IMAGE_WIDTH);
+            $height = min($info[1], self::MAX_IMAGE_HEIGHT);
+
+        }
 
         // Get image id
         $db = getDatabase();
