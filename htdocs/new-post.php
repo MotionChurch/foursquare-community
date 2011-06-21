@@ -190,7 +190,8 @@ function handle_images() {
     $post = $_SESSION['newpost'];
 
     // Display image form
-    echo "<p>You may upload up to four images with your post.</p>";
+    echo "<p>You may upload up to four images with your post."
+        . " Valid image types are JPEG and PNG.</p>";
 
     form_start('source');
 

@@ -11,11 +11,12 @@
 require_once "base.inc.php";
 
 class Post {
+    const MAX_IMAGE_DIM = 600;
+
     private $info;
     private $indatabase = false;
     private $images;
     private $category;
-
 
     public function __construct($info=null) {
         $this->info = is_null($info) ? array() : $info;
@@ -267,28 +268,49 @@ class Post {
         $info = @getimagesize($file);
 
         if (!$info) {
+            // Quietly ignore that the file isn't an image.
             return false;
         }
 
-        // TODO Verify image dimensions?
-        if ($info[0] > self::MAX_IMAGE_WIDTH
-            or $info[1] > self::MAX_IMAGE_HEIGHT) {
+        // Resize Images if needed
+        if ($info[0] > self::MAX_IMAGE_DIM
+            or $info[1] > self::MAX_IMAGE_DIM) {
 
             $ratio = $info[0] / $info[1];
 
             if ($ratio > 1) {
                 // Width limited
-                $width = min($info[0], self::MAX_IMAGE_WIDTH);
-                $height = $info[1] / $ratio;
+                $width = min($info[0], self::MAX_IMAGE_DIM);
+                $height = $info[1] * $width / $info[0];
 
             } else {
                 // Height limited
-
+                $height = min($info[1], self::MAX_IMAGE_DIM);
+                $width = $info[0] * $height / $info[1];
             }
             
-            $width = min($info[0], self::MAX_IMAGE_WIDTH);
-            $height = min($info[1], self::MAX_IMAGE_HEIGHT);
+            switch ($info[2]) {
+                case IMAGETYPE_JPG:
+                    $image = imagecreatefromjpeg($file);
+                    break;
 
+                case IMAGETYPE_PNG:
+                    $image = imagecreatefrompng($file);
+                    break;
+
+                default:
+                    // We quietly ignore if the image is not a valid type.
+                    return false;
+            }
+
+            $newimage = imagecreatetruecolor($width, $height);
+
+            imagecopyresampled($newimage, $image, 0, 0, 0, 0, $width, $height, $info[0], $info[1]);
+            
+            imagejpeg($newimage, $file);
+
+            imagedestroy($newimage);
+            imagedestroy($image);
         }
 
         // Get image id
