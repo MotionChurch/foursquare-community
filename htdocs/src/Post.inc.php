@@ -290,7 +290,7 @@ class Post {
             }
             
             switch ($info[2]) {
-                case IMAGETYPE_JPG:
+                case IMAGETYPE_JPEG:
                     $image = imagecreatefromjpeg($file);
                     break;
 
