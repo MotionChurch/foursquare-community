@@ -213,7 +213,7 @@ class Post {
 
     public function getCategory() {
         if ($this->category == NULL) {
-            $this->category = Categories::getById($this->info['category_id']);
+            $this->category = Category::getById($this->info['category_id']);
         }
 
         return $this->category;

@@ -69,7 +69,7 @@ if ($post->getPrice() != 0) {
 
 echo "</h2>";
 
-
+echo "<p>Category: " . $post->getCategory()->getName() . "</p>";
 echo "<p>Date: ". date('r', $post->getTimestamp()) ."</p>";
 echo "<p>Email: <a href=\"mailto:". $post->getPublicEmail() ."\">"
     . $post->getPublicEmail() ."</a></p>";
