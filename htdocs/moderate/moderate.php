@@ -34,9 +34,7 @@ if (isset($_GET['id']) and is_numeric($_GET['id'])) {
                     break;
 
                 case 'delete':
-                    if ($_SESSION['currentUser']->isAdmin()) {
-                        $post->delete();
-                    }
+                    $post->delete();
                     break;
             }
 

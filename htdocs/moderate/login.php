@@ -13,7 +13,8 @@ if (isset($_POST['login_email']) and isset($_POST['login_password'])) {
 
     if ($user and $user->authenticate($_POST['login_password'])) {
         $_SESSION['currentUser'] = $user;
-        header('Location: index.php');
+
+        header("Location: index.php");
 
     } else {
         $error = "<div class=\"error\">Invalid Username/Password</div>";

@@ -10,6 +10,12 @@
 
 require_once "src/base.inc.php";
 
+// Check if we need to login first...
+if (isset($_GET['moderate']) and !isset($_SESSION['currentUser'])) {
+    header('Location: ' . $CONFIG['urlroot'].'/moderate/login.php');
+    exit();
+}
+
 require_once "src/header.inc.php";
 
 
@@ -27,6 +33,7 @@ if (!is_numeric($id)) {
 
 // Get the post.
 $post = Post::getById($id);
+
 
 if (!$post or (!isset($_SESSION['currentUser']) and $post->getStage() != 'approved')) {
     errorNotFound();
@@ -46,14 +53,12 @@ if (isset($_SESSION['currentUser'])) {
 
     } else {
         // Post already approved
-        if ($_SESSION['currentUser']->isAdmin()) {
-            echo "<div class=\"moderationbox\">Administrative options:<br />";
-            
-            printf("<a href=\"../moderate/moderate.php?id=%s&action=delete\">delete post</a><br />"
-                . "<a href=\"../moderate/moderate.php?id=%s&action=reject\">reject post</a>",
-                $post->getid(), $post->getid());
-            echo "</div>";
-        }
+        echo "<div class=\"moderationbox\">Administrative options:<br />";
+        
+        printf("<a href=\"../moderate/moderate.php?id=%s&action=delete\">delete post</a><br />"
+            . "<a href=\"../moderate/moderate.php?id=%s&action=reject\">reject post</a>",
+            $post->getid(), $post->getid());
+        echo "</div>";
     }
 
 }
