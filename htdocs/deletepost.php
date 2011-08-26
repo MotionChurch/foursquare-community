@@ -40,9 +40,9 @@ if (isset($_GET['confirmed'])) {
     echo "<p>Are you sure you want to remove your posting titled "
         . $post->getName() ."?</p>";
     echo "<p><a href=\"". $_SERVER['REQUEST_URI']
-        ."&confirmed\">Yes, delete it</a> ";
-    echo "<a href=\"". $GLOBALS['CONFIG']['urlroot']
-        ."\">No, do not delete</a></p>";
+        ."&confirmed\">Yes, delete it.</a></p>";
+    echo "<p><a href=\"". $GLOBALS['CONFIG']['urlroot']
+        ."\">No, do not delete it.</a></p>";
 }
 
 require_once "src/footer.inc.php";
