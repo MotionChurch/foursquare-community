@@ -45,8 +45,12 @@ if (isset($_SESSION['currentUser'])) {
         // Post waiting for approval...
         echo "<div class=\"moderationbox\">You are moderating this post: ";
         printf("<a href=\"../moderate/moderate.php?id=%s&action=approve\">approve</a> "
-            . "<a href=\"../moderate/moderate.php?id=%s&action=reject\">reject</a>",
-            $post->getid(), $post->getid());
+            . " or <a href=\"../moderate/moderate.php?id=%s&action=reject\">reject</a>."
+            , $post->getid(), $post->getid());
+
+        // Print Source information
+        printSourceInfo($post);
+
         echo "<p><a href=\"../moderate/index.php\">return to moderation</a></p>";
         echo "</div>";
 
@@ -58,6 +62,9 @@ if (isset($_SESSION['currentUser'])) {
         printf("<a href=\"../moderate/moderate.php?id=%s&action=delete\">delete post</a><br />"
             . "<a href=\"../moderate/moderate.php?id=%s&action=reject\">reject post</a>",
             $post->getid(), $post->getid());
+
+        printSourceInfo($post);
+        
         echo "</div>";
     }
 
@@ -90,6 +97,25 @@ foreach ($post->getImages() as $imgid) {
 }
 
 require_once "src/footer.inc.php";
+
+function printSourceInfo($post) {
+    // Print Source information
+    $source = $post->getSource();
+    
+    if ($source !== false) {
+        // Get source from source id
+        $sourceObj = Source::getById($source);
+        $source = $sourceObj->getName();
+        
+
+    } else {
+        // Get other
+        $source = $post->getOtherSource();
+    }
+
+    printf("<p>This post was posted by %s from %s.</p>",
+        $post->getEmail(), $source);
+}
 
 function errorNotFound() {
     // Get the 404 page
