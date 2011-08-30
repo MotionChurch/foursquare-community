@@ -94,6 +94,22 @@ CREATE TABLE page (
     UNIQUE  KEY(url)
 );
 
+CREATE TABLE moderator_schedule (
+    position    TINYINT UNSIGNED NOT NULL,
+    user_id     INTEGER UNSIGNED NOT NULL,
+
+    PRIMARY KEY(position, user_id)
+);
+
+CREATE TABLE moderator_exceptions ( 
+    year        INTEGER UNSIGNED NOT NULL,
+    week        TINYINT UNSIGNED NOT NULL,
+    user_id     INTEGER UNSIGNED NOT NULL,
+
+    PRIMARY KEY(year, week)
+);
+
+
 -- The following creates some sample data
 INSERT INTO `category` (`shortname`, `name`, `description`, `options`)
 VALUES
