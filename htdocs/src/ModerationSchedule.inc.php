@@ -70,11 +70,18 @@ class ModerationSchedule implements Iterator {
     }
 
     public function key() {
-        // TODO: Return "key" for "current" moderator (date)
+        return strtotime($this->year . 'W' .
+            ($this->week < 10 ? '0' : '') . $this->week);
     }
 
     public function next() {
-        // TODO: Impl. next
+        if ($this->week == 53) {
+            $this->week = 1;
+            $this->year++;
+        
+        } else {
+            $this->week++;
+        }
     }
 
     public function valid() {
