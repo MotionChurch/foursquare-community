@@ -49,7 +49,8 @@ if (isset($_SESSION['currentUser'])) {
             , $post->getid(), $post->getid());
 
         // Print Source information
-        printSourceInfo($post);
+        printf("<p>This post was posted by %s from %s.</p>",
+            $post->getEmail(), $post->getSourceName());
 
         echo "<p><a href=\"../moderate/index.php\">return to moderation</a></p>";
         echo "</div>";
@@ -63,7 +64,9 @@ if (isset($_SESSION['currentUser'])) {
             . "<a href=\"../moderate/moderate.php?id=%s&action=reject\">reject post</a>",
             $post->getid(), $post->getid());
 
-        printSourceInfo($post);
+        // Print source info.
+        printf("<p>This post was posted by %s from %s.</p>",
+            $post->getEmail(), $post->getSourceName());
         
         echo "</div>";
     }
@@ -98,24 +101,6 @@ foreach ($post->getImages() as $imgid) {
 
 require_once "src/footer.inc.php";
 
-function printSourceInfo($post) {
-    // Print Source information
-    $source = $post->getSource();
-    
-    if ($source !== false) {
-        // Get source from source id
-        $sourceObj = Source::getById($source);
-        $source = $sourceObj->getName();
-        
-
-    } else {
-        // Get other
-        $source = $post->getOtherSource();
-    }
-
-    printf("<p>This post was posted by %s from %s.</p>",
-        $post->getEmail(), $source);
-}
 
 function errorNotFound() {
     // Get the 404 page

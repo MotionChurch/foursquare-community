@@ -28,12 +28,13 @@ $posts->query();
 if ($posts->valid()) {
     foreach ($posts as $id => $post) {
         printf("<div class=\"post\"><p><a href=\"%s/postings/%s.html?moderate\">%s</a></p>"
-                . "%s <a href=\"mailto:%s\">%s</a></div>",
+                . "%s <a href=\"mailto:%s\">%s</a> - %s</div>",
 
                 $GLOBALS['CONFIG']['urlroot'],
                 $id, $post->getName(),
                 $post->getCreated(),
-                $post->getEmail(), $post->getEmail());
+                $post->getEmail(), $post->getEmail(),
+                $post->getSourceName());
     }
 
 } else {

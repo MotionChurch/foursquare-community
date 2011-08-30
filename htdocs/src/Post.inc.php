@@ -155,6 +155,22 @@ class Post {
         }
     }
 
+    public function getSourceName() {
+        $source = $this->getSource();
+        
+        if ($source !== false) {
+            // Get source from source id
+            $sourceObj = Source::getById($source);
+            $source = $sourceObj->getName();
+
+        } else {
+            // Get other
+            $source = "Other: " . $post->getOtherSource();
+        }
+
+        return $source;
+    }
+
     public function getOtherSource() {
         return $this->info['reason'];
     }
