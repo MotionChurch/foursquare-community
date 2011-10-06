@@ -105,8 +105,10 @@ CREATE TABLE moderator_exceptions (
     year        INTEGER UNSIGNED NOT NULL,
     week        TINYINT UNSIGNED NOT NULL,
     user_id     INTEGER UNSIGNED NOT NULL,
+    substitute  INTEGER UNSIGNED NOT NULL,
 
-    PRIMARY KEY(year, week)
+
+    PRIMARY KEY(year, week, user_id)
 );
 
 
