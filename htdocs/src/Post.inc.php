@@ -414,8 +414,7 @@ class Post {
     }
 
     public function notifyModerators() {
-        $ui = new UserIterator();
-        $ui->filterNotify(true);
+        $ui = new ModerationSchedule();
         $ui->query();
 
         $url = buildUrl('postings/' . $this->getId() .'.html?moderate');
@@ -425,10 +424,10 @@ class Post {
         $email->appendMessage("A new posting is awaiting moderation.\nYou can view the post at $url");
 
         if ($ui->valid()) {
-            foreach($ui as $user) {
-                $email->setTo($user->getEmail());
-                $email->send();
-            }
+            $user = $ui->current();
+
+            $email->setTo($user->getEmail());
+            $email->send();
         }
     }
 }

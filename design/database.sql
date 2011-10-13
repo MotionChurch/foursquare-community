@@ -94,12 +94,16 @@ CREATE TABLE page (
     UNIQUE  KEY(url)
 );
 
-CREATE TABLE moderator_schedule (
-    position    TINYINT UNSIGNED NOT NULL,
-    user_id     INTEGER UNSIGNED NOT NULL,
+-- CREATE TABLE moderator_schedule (
+--     position    TINYINT UNSIGNED NOT NULL,
+--     user_id     INTEGER UNSIGNED NOT NULL,
+-- 
+--     PRIMARY KEY(position, user_id)
+-- );
 
-    PRIMARY KEY(position, user_id)
-);
+CREATE VIEW moderator_schedule AS
+    SELECT id AS position, id AS user_id FROM user
+        WHERE notify=1;
 
 CREATE TABLE moderator_exceptions ( 
     year        INTEGER UNSIGNED NOT NULL,

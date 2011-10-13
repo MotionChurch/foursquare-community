@@ -53,6 +53,7 @@ if (isset($_GET['logout'])) {
 <div id="modnav">
     <ul>
         <li><a href="<?= buildUrl('moderate/') ?>">Moderate Posts</a></li>
+        <li><a href="<?= buildUrl('moderate/schedule/') ?>">Schedule</a></li>
         
         <?php
             // Admin Navigation

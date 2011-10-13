@@ -25,10 +25,30 @@ class ModerationExceptions implements Iterator {
         $this->expos = 0;
     }
 
+    /**
+     *  Return the current exception row.
+     */
     public function current() {
-        return User::getById($this->exceptions[$this->expos]['user_id']);
+        return $this->exceptions[$this->expos];
     }
 
+    /**
+     *  Return the User object for the substitute.
+     */
+    public function getSubstitute() {
+        return User::getById($this->exceptions[$this->expos]['substitute']);
+    }
+
+    /**
+     *  Return the user object for the person who the exception is fore.
+     */
+    public function getUser() {
+        return User::getById($this->exceptions[$this->expos]['user_id']);
+    }
+        
+    /**
+     *  Return the unix timestamp of the first day of the exception week.
+     */
     public function key() {
         $year = $this->exceptions[$this->expos]['year'];
         $week = $this->exceptions[$this->expos]['week'] + 0;
@@ -62,4 +82,3 @@ class ModerationExceptions implements Iterator {
 }
 
 ?>
-

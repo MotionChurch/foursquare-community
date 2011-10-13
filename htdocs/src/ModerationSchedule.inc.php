@@ -82,6 +82,7 @@ class ModerationSchedule implements Iterator {
         $this->moderator = User::getById($this->moderators[$modpos]['user_id']);
 
         // Check for exceptions
+        // TODO: Refactor this exception code to use the ModerationException iterator.
         if (count($this->exceptions) > 0) {
             // Skip exceptions prior to the current() date.
             while (
@@ -101,10 +102,10 @@ class ModerationSchedule implements Iterator {
             while($this->exceptions[$this->expos]['year'] == $this->year
                 and $this->exceptions[$this->expos]['week'] == $this->week) {
 
-                if ($this->exceptions[$i]['user_id'] == $this->moderator->getId()) {
+                if ($this->exceptions[$this->expos]['user_id'] == $this->moderator->getId()) {
                     // Yes, return the replacement
                     $this->exceptionfor = $this->moderator;
-                    $this->moderator = User::getById($this->exceptions[$this->expos]['user_id']);
+                    $this->moderator = User::getById($this->exceptions[$this->expos]['substitute']);
                     break;
                 }
 

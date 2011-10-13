@@ -6,6 +6,11 @@ body {
     font-family: Helvetica;
 }
 
+h3 {
+    margin-bottom: 0em;
+    margin-top: 1.75em;
+}
+
 #nav, #content, #footer, #buttonblock {
     margin: 0 auto 0 auto;
     width: 660px;
@@ -44,7 +49,6 @@ body {
     background: url('../images/headerbg.jpg') repeat-x center top;
     text-align: center;
     height: 191px;
-    padding-top: 10px;
 }
 
 #about {
@@ -142,4 +146,8 @@ a, a:visited {
 
 .errorbox p {
     margin: 0;
+}
+
+.nomargin {
+    margin: .5em 0 .5em 0;
 }
