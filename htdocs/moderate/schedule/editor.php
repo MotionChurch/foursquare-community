@@ -11,7 +11,7 @@
 require_once('../../src/base.inc.php');
 
 // Verify User is admin
-if (!isset($_SESSION['currentUser']) or !$_SESSION['currentUser']->isAdmin()) {
+if (!isset($_SESSION['currentUser'])) {
     header('Location: ' . buildUrl('moderate/'));
     exit;
 }
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 require_once('../src/header.inc.php');
 
-echo "<h3>Edit User</h3>";
+echo "<h3>Add Exception</h3>";
 
 if ($error != '') {
     echo "<div class=\"errorbox\">$error</div>";
@@ -85,30 +85,12 @@ if ($error != '') {
 
 $url = "editor.php";
 
-if (isset($_GET['id'])) {
-    $url .= '?id=' . $_GET['id'];
-}
-
 echo "<form action=\"$url\" method=\"post\">";
 
 ?>
 
-<p><label>Name: <input type="text" name="name" value="<?= $user->getName() ?>" /></label></p>
-<p><label>Email: <input type="text" name="email" value="<?= $user->getEmail() ?>" /></label></p>
-<p><label>Source: <?php sourceDropdown('source', $user->getSource()) ?></label></p>
-<p><label>
-<input type="checkbox" name="admin" value="1"  <?= $user->isAdmin() ? 'checked="checked"' : '' ?> />
-Administrator</label></p>
-<p><label>
-<input type="checkbox" name="notify" value="1" <?= $user->getNotify() ? 'checked="checked"' : '' ?> />
-Notify of posts</label></p>
-
-<?php
-    if (isset($_GET['id'])) {
-        echo "<p><label><input type=\"checkbox\" name=\"newpass\" value=\"1\" />"
-            . "Send new password</label></p>";
-    }
-?>
+<p><label>Date: <input type="text" name="date" value="<?= $date ?>" /></label></p>
+<p><label>Substitute: <?php usersDropdown('substitute', $substitute); ?></label></p>
 
 <p>
 <input type="submit" class="bigbutton" value="Save" />
@@ -120,18 +102,21 @@ Notify of posts</label></p>
 
 <?php
 
-function sourceDropdown($name, $select) {
+function usersDropdown($name, $select) {
     echo "<select name=\"$name\">";
-    
-    foreach(Source::getSources() as $source) {
-        if ($source->getId() == $select) {
-            echo "<option value=\"". $source->getId()
+
+    $ui = new UserIterator();
+    $ui->query();
+
+    foreach($ui as $user) {
+        if ($user->getId() == $select) {
+            echo "<option value=\"". $user->getId()
                 ."\" selected=\"selected\">"
-                . $source->getName() ."</option>";
+                . $user->getName() ."</option>";
 
         } else {
-            echo "<option value=\"". $source->getId() ."\">"
-                . $source->getName() ."</option>";
+            echo "<option value=\"". $user->getId() ."\">"
+                . $user->getName() ."</option>";
         }
     }
 

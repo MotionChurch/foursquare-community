@@ -33,6 +33,13 @@ h3 {
     padding: 0.3em 1em 0.3em 1em;
     text-decoration: none;
     border-radius: 5px;
+    font-size: small;
+}
+
+input.bigbutton {
+    padding: 0.3em 1em 0.3em 1em;
+    border: none;
+    font-size: small;
 }
 
 .smallbutton, .smallbutton:visited {
